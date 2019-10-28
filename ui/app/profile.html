@@ -1,0 +1,67 @@
+<div class="main">
+  <div class="main-inner">
+    <div class="container">	  
+	  <div class="row">
+		<div class="span12">
+		
+		  <?=$alerts?>
+			
+          <div class="widget">
+            <div class="widget-header"> <i class="icon-user"></i>
+              <h3>User Profile</h3>
+            </div>
+            <!-- /widget-header -->
+            <div class="widget-content">
+			  <form method="POST" action="/accounts/profile" class="form-horizontal">
+			  
+				<div class="control-group">
+				  <label class="control-label">Name :</label>
+				  <div class="controls">
+					<input type="text" class="span10" name="name" placeholder="Name" value="<?=$name?>" />
+				  </div>
+				</div>
+				
+				<div class="control-group">
+				  <label class="control-label">Email :</label>
+				  <div class="controls">
+					<input type="text" class="span10" name="email" placeholder="Email" value="<?=$email?>" readonly />
+				  </div>
+				</div>
+				
+				<div class="control-group" style="margin-top: 25px;">
+					<hr>
+				</div>
+				
+				<div class="control-group">
+				  <label class="control-label">Current Password :</label>
+				  <div class="controls">
+					<input type="password" name="password" class="span10" placeholder="Enter Current Password" />
+				  </div>
+				</div>
+				
+				<div class="control-group">
+				  <label class="control-label">New Password :</label>
+				  <div class="controls">
+					<input type="password" name="new_password" class="span10" placeholder="Enter New Password" />
+				  </div>
+				</div>			
+				
+				<div style="margin-top: 20px; text-align: right; margin-right: 10px;">
+				  <span ><button type="submit" name="save" value="save" class="btn btn-primary waves-effect w-md m-b-5">Save</button></span> <span><a href="/accounts" class="btn btn-warning waves-effect w-md m-b-5">Cancel</a></span>
+				</div>
+				
+			  </form>
+            </div>
+            <!-- /widget-content --> 
+          </div>
+          <!-- /widget -->		
+		
+		</div>
+	  </div>
+	  <!-- /row --> 
+	  
+    </div>
+    <!-- /container --> 
+  </div>
+  <!-- /main-inner --> 
+</div>

@@ -1,0 +1,91 @@
+    <main id="main" role="main">
+        <section id="checkout-container">
+            <div class="container">
+                <div class="row py-5">
+                    <div class="col-md-4 order-md-2 mb-4">
+                        <h4 class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="text-muted">Payment Information</span>
+                        </h4>
+                        <ul class="list-group mb-3">
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div>
+                                    <h6 class="my-0"><?=$SITENAME?> Credits Top-up</h6>
+                                    <small class="text-muted"><?=$SITENAME?> account credits reload.</small>
+                                </div>
+                                <span class="text-muted">$<?=$amount?></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Total (USD)</span>
+                                <strong>$<?=$amount?></strong>
+                            </li>
+                        </ul>
+                        <div class="payment-methods">
+                            <p class="pt-4 mb-2">Payment Options</p>
+                            <hr>
+							<div class="text-center" style="text-align:center;width:100%;">
+								<ul class="list-inline d-flex">
+									<li class="mx-1 text-primary">
+										<i class="fa-2x fa fa-cc-paypal"></i>
+									</li>								
+									<li class="mx-1 text-primary">
+										<i class="fa-2x fa fa-cc-visa"></i>
+									</li>
+									<li class="mx-1 text-primary">
+										<i class="fa-2x fa fa-cc-mastercard"></i>
+									</li>
+									<li class="mx-1 text-primary">
+										<i class="fa-2x fa fa-cc-jcb"></i>
+									</li>
+									<li class="mx-1 text-primary">
+										<i class="fa-2x fa fa-cc-discover"></i>
+									</li>
+									<li class="mx-1 text-primary">
+										<i class="fa-2x fa fa-cc-amex"></i>
+									</li>
+								</ul>
+							</div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 order-md-1">
+                        <h4 class="mb-3">Create an Account</h4>
+                        <form class="needs-validation" method="POST" action="/buy/<?=$amount?>" novalidate>
+                            <div class="mb-3">
+                                <label for="email">Name</label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+                                <div class="invalid-feedback">
+                                    Please enter your complete name.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
+                                <div class="invalid-feedback">
+                                    Please enter a valid email address for shipping updates.
+                                </div>
+                            </div>
+							
+                            <div class="mb-3">
+                                <label for="email">Password</label>
+                                <input type="text" class="form-control" id="password" name="password" placeholder="Password" required>
+                                <div class="invalid-feedback">
+                                    Please enter your complete name.
+                                </div>
+                            </div>							
+                            
+							<hr class="mb-4">
+							
+							<div class="mb-3"><center><a href="/accounts/login?ref=/buy/<?=$amount?>">Already have an account? Click here!</a></center></div>
+							
+							<hr class="mb-4">
+							
+                            <button class="btn btn-primary btn-lg btn-block" type="submit" name="submit" value="register">Register and Continue to Checkout</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <a href="#" class="btn btn-primary scrollUp">
+            <i class="fa fa-arrow-circle-o-up"></i>
+        </a>
+    </main>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+    <meta charset="utf-8">
+    <title><?=$SITENAME?> Login</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes"> 
+    
+	<link href="/ui/app/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="/ui/app/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+
+	<link href="/ui/app/css/font-awesome.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600|Montserrat:200,300,400" rel="stylesheet">
+		
+	<link href="/ui/app/css/pages/signin.css" rel="stylesheet" type="text/css">
+	<link href="/ui/app/css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+	
+	<div class="navbar navbar-fixed-top">
+	
+	<div class="navbar-inner">
+		
+		<div class="container">
+			
+			<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</a>
+			
+			<a class="brand" href="/accounts/login">
+				<?=$SITENAME?>				
+			</a>		
+			
+			<div class="nav-collapse">
+				<ul class="nav pull-right">
+					
+					<li class="">						
+						<a href="/" class="">
+							Don't have an account?
+						</a>
+						
+					</li>
+					
+					<li class="">						
+						<a href="/accounts" class="">
+							<i class="icon-chevron-left"></i>
+							Back to Homepage
+						</a>
+						
+					</li>
+				</ul>
+				
+			</div><!--/.nav-collapse -->	
+	
+		</div> <!-- /container -->
+		
+	</div> <!-- /navbar-inner -->
+	
+</div> <!-- /navbar -->
+
+
+
+<?php echo $this->render(Base::instance()->get('content')); ?>
+
+
+
+<div class="login-extra">
+	<div class="pull-right"><a href="/">Don't have an account?</a></div>
+	<div class="pull-left"><a href="/accounts/reset">Reset Password</a></div>
+</div> <!-- /login-extra -->
+
+
+<script src="/ui/app/js/jquery-1.7.2.min.js"></script>
+<script src="/ui/app/js/bootstrap.js"></script>
+
+<script src="/ui/app/js/signin.js"></script>
+
+</body>
+
+</html>

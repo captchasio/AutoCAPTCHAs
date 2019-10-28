@@ -1,0 +1,60 @@
+<div class="main">
+  <div class="main-inner">
+    <div class="container">	  
+	  <div class="row">
+		<div class="span12">
+
+          <div class="widget">
+            <div class="widget-header"> <i class="icon-list"></i>
+              <h3>Order History</h3>
+            </div>
+            <!-- /widget-header -->
+            <div class="widget-content">
+				<table id="datatable" class="table table-stripe table-hover data-table" cellspacing="10" cellpadding="5">
+				  <thead>
+					<tr>
+					  <th>ORDER ID</th>
+					  <th>AMOUNT</th>
+					  <th>CURRENCY</th>
+					  <th>STATUS</th>
+					  <th>METHOD</th>
+					  <th>DATE</th>
+					</tr>
+				  </thead>
+				  <tbody>	
+					<?			
+						foreach ($orders as $order) {
+							if ($order['status'] == 'unpaid') {
+								$order['status'] = '<div style="color:#FF0000;">' . strtoupper($order['status']) . '</div>';
+							} else {
+								$order['status'] = '<div style="color:#0000FF;">' . strtoupper($order['status']) . '</div>';
+							}
+							
+							print '
+								<tr>
+									<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><b>' . $order['id'] . '</b></td>
+									<td style="font-size: 16px; vertical-align: middle; text-align: right; padding-right: 20px; background-color: #F8F8F8;">' . number_format($order['price'], 2) . '</td>
+									<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;">' . $order['currency'] . '</td>
+									<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><b>' . $order['status'] . '</b></td>
+									<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;">' . $order['payment_method'] . '</td>
+									<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;">' . $order['date'] . '</td>
+								</tr>
+							';
+						}
+					?>
+				  </tbody>				  
+				</table>			  
+            </div>
+            <!-- /widget-content --> 
+          </div>
+          <!-- /widget -->		
+		
+		</div>
+	  </div>
+	  <!-- /row --> 
+	  
+    </div>
+    <!-- /container --> 
+  </div>
+  <!-- /main-inner --> 
+</div>

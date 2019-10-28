@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title><?=$SITENAME?> Credits Order</title>
+    <!-- Required meta tags always come first -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="/ui/buy/dist/font-awesome/css/font-awesome.min.css" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="/ui/buy/css/main.min.css">
+</head>
+
+<body>
+    <div class="loader"></div>
+    <header id="header">
+        <nav class="navbar navbar-expand-md navbar-light bg-light border-bottom">
+            <div class="container">
+                <a class="navbar-brand" href="/" id="header-logo">
+                    <?=$SITENAME?>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto text-center">
+                        <li class="nav-item">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+	
+	<?php echo $this->render(Base::instance()->get('content')); ?>
+	
+    <!-- Footer -->
+    <footer id="footer">
+        <p class="copyright">Copyright &copy; <?=date('Y')?> - <a target="_blank" title="<?=$SITENAME?>" href="<?=$BASEURL?>"><?=$SITENAME?></a> - All Rights Reserved.</p>
+    </footer>
+	
+    <!-- jQuery first, then Bootstrap JS. -->
+    <script src="/ui/buy/dist/jquery/jquery.min.js"></script>
+    <script src="/ui/buy/dist/popper/popper.min.js" integrity=""></script>
+    <script src="/ui/buy/dist/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/ui/buy/js/main.min.js"></script>
+</body>
+
+</html>
