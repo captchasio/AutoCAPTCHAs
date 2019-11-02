@@ -9,7 +9,12 @@ Requirements:
 2. MySQL5.6 and variaties
 3. CURLor PHP-CURL
 
-Installation:
+HTML Installation:
+
+1. Upload the files to your server
+2. Browse https://yourdomain.com/path/to/autocaptchas/install/
+
+Manual Installation:
 
 1. Signup for an account at https://app.captchas.io/reseller/onboard/ 
     and be sure to provide Paddle.com Key & Code.
