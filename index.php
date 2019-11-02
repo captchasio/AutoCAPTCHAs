@@ -10,9 +10,9 @@ $f3->set('DEBUG',0);
 if ((float)PCRE_VERSION<7.9)
 	trigger_error('PCRE version is out of date');
 
-$f3->config('config.ini');
+$f3->config('lib/config.ini');
 
-$config = parse_ini_file("config.ini", 'globals');
+$config = parse_ini_file("lib/config.ini", 'globals');
 $f3->set('APIKEY', $config['globals']['KEY']);
 $f3->set('BASEURL', $config['globals']['BASEURL']);
 $f3->set('SITENAME', $config['globals']['SITENAME']);
@@ -34,6 +34,12 @@ $f3->route('GET|POST /',
 	function($f3) {
 		$f3->set('content','index.html');
 		echo View::instance()->render('layout.html');
+	}
+);
+
+$f3->route('GET /download',
+	function($f3) {
+		$f3->reroute('https://github.com/articlefr/AutoCAPTCHAs/releases');
 	}
 );
 

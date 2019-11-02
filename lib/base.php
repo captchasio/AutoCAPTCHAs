@@ -45,7 +45,7 @@ final class Base extends Prefab implements ArrayAccess {
 	//@{ Framework details
 	const
 		PACKAGE='AutoCAPTCHAs.COM',
-		VERSION='1.1.2-Release';
+		VERSION='1.1.3-Release';
 	//@}
 
 	//@{ HTTP status codes (RFC 2616)

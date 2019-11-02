@@ -9,7 +9,7 @@ class API {
 	private $settings_file = NULL;
 	
 	function __construct() {
-		$this->ini = parse_ini_file(dirname(dirname(__FILE__)) . "/config.ini");
+		$this->ini = parse_ini_file(dirname(dirname(__FILE__)) . "/lib/config.ini");
 		$this->db = new Database($this->ini["DBHOST"], $this->ini["DBUSERNAME"], $this->ini["DBPASSWORD"], $this->ini["DBNAME"], $this->ini["DBPORT"]);
 	}
 	
@@ -82,14 +82,9 @@ class API {
 	}
 	
 	function is_displayed($id) {
-		if ($id) {
-			$result = $this->db->squery("SELECT `answer` FROM `requests` WHERE `id` = '" . $id . "'");
-			$return = $result['displayed'] == 0 ? FALSE : TRUE;
-			
-			return $return;
-		} else {
-			return FALSE;
-		}
+		$result = $this->db->squery("SELECT * FROM `requests` WHERE `id` = '" . trim($id) . "'");
+		
+		return $result['displayed'];
 	}
 	
 	function get_answer($id) {
