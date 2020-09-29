@@ -3,7 +3,7 @@
  * @package AutoCAPTCHAs
  * @website: http://autocaptchas.com
  * @author Glenn Prialde
- * @since 1.1.3
+ * @since 1.1.4
  */
 error_reporting(E_ALL & ~E_NOTICE);
 session_start();

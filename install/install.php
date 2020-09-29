@@ -3,7 +3,7 @@
  * @package AutoCAPTCHAs
  * @website: http://autocaptchas.com
  * @author Glenn Prialde
- * @since 1.1.3
+ * @since 1.1.4
  */
 ini_set('display_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE);
@@ -325,7 +325,7 @@ if($_REQUEST['license'] == 'agree'){
 			
 			autocaptchas_saveconfigfile($_REQUEST['db_host'], $_REQUEST['db_port'], $_REQUEST['db_name'], $_REQUEST['db_user'], $_REQUEST['db_password'], $_REQUEST['base_url'], $_REQUEST['site_name'], $_REQUEST['support'], $_REQUEST['recaptchas'], $_REQUEST['images'], $_REQUEST['audios'], $_REQUEST['admin_email']);
 
-			header('location: install.php?result=completed');
+			//header('location: install.php?result=completed');
 		}
 	}
 	autocaptchas_checksetup();

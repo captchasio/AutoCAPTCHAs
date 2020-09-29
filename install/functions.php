@@ -1,5 +1,5 @@
 <?php
-define('AUTOCAPTCHAS_VERSION' , '1.1.3');
+define('AUTOCAPTCHAS_VERSION' , '1.1.4');
 define('AUTOCAPTCHAS_PATH', dirname(__FILE__).'/');
 
 function http_get($url) {

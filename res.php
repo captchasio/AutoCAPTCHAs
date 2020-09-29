@@ -57,13 +57,29 @@
 		return $value;
 	}
 	
+	function get_result($url) {
+		$answer = trim(http_get($url));
+		
+		$_rest = explode("|", $answer);	
+		$ok = trim($_rest[0]);	
+		$token = trim($_rest[2]);			
+		$elapsed = trim($_rest[1]);
+			
+		if (empty($token) && $ok == 'OK') {
+			$answer = trim(get_result($url));
+		}
+		
+		return $answer;
+	}
+	
 	if (strtolower(trim($_REQUEST['action'])) == "get") {			
 		$base64 = $api->get_base64($_REQUEST['id']);
 		$recaptcha = $api->get_recaptcha_id($_REQUEST['id']);
 		
 		if ($recaptcha != 0) {
 			$url = 'https://api.captchas.io/reseller/recaptcha_result?key='.$key.'&user_key='.$_user_key.'&captcha_id=' . $_REQUEST['id'];
-			$answer = trim(http_get($url));		
+			//$answer = trim(get_result($url));		
+			$answer = trim(http_get($url));
 			
 			$_rest = explode("|", $answer);	
 			$token = trim($_rest[2]);			
@@ -80,9 +96,9 @@
 				
 				print 'ERROR_CAPTCHA_IS_UNSOLVABLE';				
 			} else {
-				if ($token == 'ERROR_CAPTCHA_UNSOLVABLE' || $token == 'ERROR_WRONG_CAPTCHA_ID' || $token == 'CAPCHA_NOT_READY') {
+				if (empty($token) && ($answer == 'ERROR_CAPTCHA_UNSOLVABLE' || $answer == 'ERROR_WRONG_CAPTCHA_ID' || $answer == 'CAPCHA_NOT_READY' || $answer == 'ERROR')) {
 					$error = 1;
-					print $token;
+					print $answer;
 				} else {
 					$error = 0;
 					
@@ -115,6 +131,7 @@
 			}				
 		} else {
 			$url = 'https://api.captchas.io/reseller/image_result?key='.$key.'&user_key='.$_user_key.'&captcha_id=' . $_REQUEST['id'];
+			//$answer = trim(get_result($url));
 			$answer = trim(http_get($url));
 			
 			$_rest = explode("|", $answer);	
@@ -133,9 +150,9 @@
 				
 				print 'ERROR_CAPTCHA_IS_UNSOLVABLE';				
 			} else {
-				if ($token == 'ERROR_CAPTCHA_UNSOLVABLE' || $token == 'ERROR_WRONG_CAPTCHA_ID' || $token == 'CAPCHA_NOT_READY') {
+				if (empty($token) && ($answer == 'ERROR_CAPTCHA_UNSOLVABLE' || $answer == 'ERROR_WRONG_CAPTCHA_ID' || $answer == 'CAPCHA_NOT_READY' || $answer == 'ERROR')) {
 					$error = 1;
-					print $token;						
+					print $answer;						
 				} else {
 					$error = 0;
 					

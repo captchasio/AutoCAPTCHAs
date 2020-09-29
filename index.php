@@ -1,15 +1,22 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ERROR);
+/**
+ * @package AutoCAPTCHAs
+ * @website: http://autocaptchas.com
+ * @author Glenn Prialde
+ * @since 1.1.4
+ */
+ 
+ini_set('display_errors', 0);
+error_reporting(0);
 
-require('lib/curl.php');
-require('lib/db/sql.php');
+require_once('lib/curl.php');
+require_once('lib/db/sql.php');
 $f3=require('lib/base.php');
 
-$f3->set('DEBUG',0);
-if ((float)PCRE_VERSION<7.9)
+$f3->set('DEBUG', 0);
+/*if ((float)PCRE_VERSION<7.9)
 	trigger_error('PCRE version is out of date');
-
+*/
 $f3->config('lib/config.ini');
 
 $config = parse_ini_file("lib/config.ini", 'globals');
@@ -39,7 +46,7 @@ $f3->route('GET|POST /',
 
 $f3->route('GET /download',
 	function($f3) {
-		$f3->reroute('https://github.com/articlefr/AutoCAPTCHAs/releases');
+		$f3->reroute('https://github.com/captchasio/AutoCAPTCHAs/releases');
 	}
 );
 
@@ -49,7 +56,7 @@ $f3->route('GET|POST /accounts',
 		$authenticated = $session['authenticated'] ? TRUE : FALSE;
 		$profile = unserialize($session['profile']);
 		
-		if (!$authenticated) {
+		if ($authenticated === FALSE) {
 			$f3->reroute('/accounts/login');
 		}
 	
@@ -245,11 +252,11 @@ $f3->route('GET|POST /accounts/login',
 		$params = $f3->get('POST');
 		$key = $f3->get('APIKEY');
 
-		if (!empty($params['email']) && !empty($params['password'])) {	
+		if (isset($params['s'])) {	
 			$curl = new Curl();
 	
 			$response = $curl->get('https://api.captchas.io/reseller/login_user?key=' . $key . '&user_email=' . $params['email'] . '&user_password=' . $params['password']);
-			
+
 			if ($response == 'ERROR_INVALID_PASSWORD') {
 				$f3->set('ESCAPE',FALSE);
 				$f3->set('errors', '<div><div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> Invalid password!</div></div>');
@@ -356,11 +363,11 @@ $f3->route('GET|POST /buy/@amount',
 				'currency' => 'USD',
 				'image_url' => 'https://captchas.io/images/icon-200.png',
 				'return_url' => $f3->get('BASEURL') . '/accounts',
-				'payment_method' => 'paddle'
+				'payment_method' => 'paypal'
 			);
 			
 			$response = $curl->post('https://api.captchas.io/reseller/create_order', $data);	
-
+			
 			$pay = json_decode($response, TRUE);
 			$f3->reroute($pay['payment_link']);
 		} 

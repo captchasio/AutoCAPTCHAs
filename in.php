@@ -1,4 +1,4 @@
-<?
+<?php
 	ini_set('display_errors', 1);
 	error_reporting(E_ERROR);	
 	
@@ -64,7 +64,7 @@
 			
 			$jpg = 'image/jpg';
 			$jpeg = 'image/jpeg';
-			$jpeg2 = 'image/pjpeg';
+			$jpeg2 = 'image/pjpeg';  
 			$gif = 'image/gif';
 			$png = 'image/png';
 			

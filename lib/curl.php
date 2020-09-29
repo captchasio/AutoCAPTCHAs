@@ -26,10 +26,12 @@ class Curl {
 	function get($url) {
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_HEADER, FALSE);					
+		curl_setopt($ch, CURLOPT_HEADER, FALSE);			
+		curl_setopt($ch, CURLOPT_TCP_NODELAY, TRUE);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 300);
-		curl_setopt($ch, CURLOPT_TIMEOUT, 300);
+		curl_setopt($ch, CURLOPT_USERAGENT,  "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1a2pre) Gecko/2008073000 Shredder/3.0a2pre ThunderBrowse/3.2.1.8");					
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1800);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 1800);
 		$raw=curl_exec($ch);
 		curl_close($ch);		
 		

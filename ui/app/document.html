@@ -123,9 +123,9 @@
 				<div style="margin-top: 20px;">
 					<h4 style="margin-bottom: 10px;">Examples</h4>
 					<p>Send / Solve Request Example:</p>
-					<p><pre><code><?=$base?>/in.php?key=1abc234de56fab7c89012d34e56fa7b8&method=userrecaptcha&googlekey=6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-&pageurl=https://mysite.com/page/with/recaptcha</code></pre></p>
+					<p><pre><code><?=$base?>/in.php?key=<?=$key?>&method=userrecaptcha&googlekey=6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-&pageurl=https://mysite.com/page/with/recaptcha</code></pre></p>
 					<p>Receive Request Example:</p>
-					<p><pre><code><?=$base?>/res.php?key=1abc234de56fab7c89012d34e56fa7b8&action=get&id=2122988149</code></pre></p>
+					<p><pre><code><?=$base?>/res.php?key=<?=$key?>&action=get&id=123456789</code></pre></p>
 					<p>CAPTCHA image:</p>
 					<p>Normal Captcha is an image that contains distorted but human-readable text. To solve the captcha user have to type the text from the image.</p>
 					<p>To solve the captcha with our service you have to submit the image with HTTP POST request to our API URL: <?=$base?>/in.php<br>
@@ -135,19 +135,19 @@
 <pre><code>&lt;form method="post" action="<?=$base?>/in.php" enctype="multipart/form-data">
 &lt;input type="hidden" name="method" value="post">
 Your key:
-&lt;input type="text" name="key" value="YOUR_APIKEY">
+&lt;input type="text" name="key" value="<?=$key?>">
 The CAPTCHA file:
 &lt;input type="file" name="file">
 &lt;input type="submit" value="Upload and get the ID">
 &lt;/form></code></pre>
 					</p>
-					<p>YOUR_APIKEY is Your API key.</p>
+					<p><?=$key?> is Your API key.</p>
 					<p>Base64 sample form</p>
 					<p>
 <pre><code>&lt;form method="post" action="<?=$base?>/in.php">
 &lt;input type="hidden" name="method" value="base64">
 Your key:
-&lt;input type="text" name="key" value="YOUR_APIKEY">
+&lt;input type="text" name="key" value="<?=$key?>">
 The CAPTCHA file body in base64 format:
 &lt;textarea name="body">BASE64_FILE</textarea>
 &lt;input type="submit" value="Upload and get the ID">
@@ -156,8 +156,8 @@ The CAPTCHA file body in base64 format:
 					<p>Make a 5 seconds timeout and submit a HTTP GET request to our API URL: <?=$base?>/res.php providing the captcha ID. <br>
 					Request URL example:
 					</p>
-					<p><pre><code><?=$base?>/res.php?key=2abc2344e56fab7c89012d34e56fa7b8&action=get&id=2323242131</code></pre></p>
-					<p>If you have any issues using our service, don´t hesitate to contact our support via E-Mail [<a href="mailto:<?=$ADMINEMAIL?>"><?=$ADMINEMAIL?></a>].</p>
+					<p><pre><code><?=$base?>/res.php?key=<?=$key?>&action=get&id=123456789</code></pre></p>
+					<p>If you have any issues using our service, don´t hesitate to contact our support via E-Mail [<a href="mailto:<?=$ADMINEMAIL?>"><?=$ADMINEMAIL?></a>] or Support [<a href="<?=$SUPPORT?>" target="_blank">HelpDesk Portal</a>].</p>
 				</div>
             </div>
             <!-- /widget-content --> 
