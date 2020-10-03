@@ -17,7 +17,7 @@ HTML Installation:
 Manual Installation:
 
 1. Signup for an account at https://app.captchas.io/reseller/onboard/ 
-    and be sure to provide Paddle.com Key & Code.
+    and be sure to provide PayPal.com email.
 2. Edit the config file config.ini and be sure to provide correct values.
 3. Install the table.sql database tables inside the "install" folder.
 
