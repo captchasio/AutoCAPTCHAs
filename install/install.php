@@ -3,7 +3,7 @@
  * @package AutoCAPTCHAs
  * @website: http://autocaptchas.com
  * @author Glenn Prialde
- * @since 1.1.4
+ * @since 1.1.5
  */
 ini_set('display_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE);
@@ -22,7 +22,7 @@ function autocaptchas_getquery() {
 	return $query;
 }
 
-function autocaptchas_saveconfigfile($db_host, $db_port, $db_name, $db_user, $db_password, $base_url, $site_name, $support, $recaptchas, $images, $audios, $admin_email){
+function autocaptchas_saveconfigfile($db_host, $db_port, $db_name, $db_user, $db_password, $base_url, $site_name, $support, $recaptchas, $images, $audios, $admin_email, $package = 'AutoCAPTCHAs.COM', $version = '1.1.5'){
 	$base_url = rtrim($base_url, '/');
 
 $content = "[globals]\n\r" . PHP_EOL . "
@@ -40,7 +40,10 @@ DBUSERNAME='" . $db_user . "'\n\r" . PHP_EOL . "
 DBPASSWORD='" . $db_password . "'\n\r" . PHP_EOL . "
 RECAPTCHARATE='" . $recaptchas . "'\n\r" . PHP_EOL . "
 IMAGERATE='" . $images. "'\n\r" . PHP_EOL . "
-AUDIORATE='" . $audios . "'\n\r" . PHP_EOL;
+AUDIORATE='" . $audios . "'\n\r" . PHP_EOL . "
+PACKAGE='" . $package. "'\n\r" . PHP_EOL . "
+VERSION='" . $version. "'\n\r" . PHP_EOL;
+
 	
 	if ( !file_put_contents(dirname(dirname(__FILE__)) . '/lib/config.ini', $content) ) {
 		return false;
@@ -62,13 +65,12 @@ function autocaptchas_agreement() {
 	}
 ?>
 <h3>Welcome <?=$reseller['name']?></h3>
-<p><div>Paddle.com Vendor ID: <b><?=$reseller['vendor_id']?></b></div>
-<div>Paddle.com Auto Code: <b><?=$reseller['auth_code']?></b></div></p>
+<p><div>PayPal.com Email: <b><?=$reseller['paypal']?></b></div></p>
 <?
 $error = FALSE;
-if (empty($reseller['vendor_id']) || empty($reseller['auth_code'])) {
+if (empty($reseller['paypal'])) {
 	$error = TRUE;
-	print '<code><p><strong>ERROR</strong>: Your Paddle.com vendor_id and auth_code is empty. Please visit <a href="https://vendors.paddle.com/authentication" target="_blank">Paddle.com</a> to get your id and code. To set these values in your reseller account please go to this <a href="https://app.captchas.io/reseller/settings" target="_blank">page</a>.</p></code>';
+	print '<code><p><strong>ERROR</strong>: Your PayPal.com email is empty. Please visit <a href="https://www.paypal.com/" target="_blank">PayPal.com</a> to get your id and code. To set these values in your reseller account please go to this <a href="https://app.captchas.io/reseller/settings" target="_blank">page</a>.</p></code>';
 }
 
 ?>

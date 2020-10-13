@@ -3,7 +3,7 @@
  * @package AutoCAPTCHAs
  * @website: http://autocaptchas.com
  * @author Glenn Prialde
- * @since 1.1.4
+ * @since 1.1.5
  */
  
 ini_set('display_errors', 0);
@@ -28,6 +28,9 @@ $f3->set('SUPPORT', $config['globals']['SUPPORT']);
 $f3->set('RECAPTCHARATE', $config['globals']['RECAPTCHARATE']);
 $f3->set('IMAGERATE', $config['globals']['IMAGERATE']);
 $f3->set('AUDIORATE', $config['globals']['AUDIORATE']);
+
+$f3->set('PACKAGE', $config['globals']['PACKAGE']);
+$f3->set('VERSION', $config['globals']['VERSION'] . '-Release');
 
 $db=new DB\SQL('mysql:host='.$config['globals']['DBHOST'].';port='.$config['globals']['DBPORT'].';dbname='.$config['globals']['DBNAME'],$config['globals']['DBUSERNAME'],$config['globals']['DBPASSWORD']);
 
