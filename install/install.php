@@ -57,7 +57,7 @@ function autocaptchas_agreement() {
 	autocaptchas_header();
 	
 	if (isset($_REQUEST['reseler_key'])) {
-		$response = http_get("https://api.captchas.io/reseller/get_reseller_profile?key=" . $_REQUEST['reseler_key']);
+		$response = http_get("https://api.captchas.io/reseller/get_reseller_profile?key=" . trim($_REQUEST['reseler_key']));
 		$reseller = json_decode($response, TRUE);
 		$_SESSION['reseler_key'] = trim($_REQUEST['reseler_key']);
 	} else {
@@ -103,7 +103,7 @@ function autocaptchas_checksetup(){
 		// -> try to CHMOD it
 		if ( function_exists('chmod') )
 		{
-			chmod(dirname(dirname(__FILE__)).'/lib', 777);
+			@chmod(dirname(dirname(__FILE__)).'/lib', 777);
 		}
 
 		// -> test again
@@ -113,70 +113,26 @@ function autocaptchas_checksetup(){
 		}
 	}
 	
-    $attach_dir = AUTOCAPTCHAS_PATH . 'uploads';
+    $attach_dir = dirname(dirname(__FILE__)) . '/lib/config.ini';
 	if ( ! file_exists($attach_dir) )
 	{
 	    @mkdir($attach_dir, 0755);
 	}
 	
-	if ( is_dir($attach_dir) )
+	if ( is_file($attach_dir) )
     {
 	    if ( ! is_writable($attach_dir) )
 	    {
 			@chmod($attach_dir, 0777);
 			if ( ! is_writable($attach_dir) )
 			{
-				$error_msg[] = '>Folder <strong>/uploads</strong> is not writable by PHP.';
+				$error_msg[] = '>File ' . dirname(dirname(__FILE__)) . '/lib/<strong>config.ini</strong> is not writable by PHP.';
 		   	}
 	    }
 	}
 	else
 	{
-		$error_msg[] = 'Folder <strong>/uploads</strong> is missing.';
-	}
-	
-    $attach_dir = AUTOCAPTCHAS_PATH . 'uploads/articles';
-	if ( ! file_exists($attach_dir) )
-	{
-	    @mkdir($attach_dir, 0755);
-	}
-	
-	if ( is_dir($attach_dir) )
-    {
-	    if ( ! is_writable($attach_dir) )
-	    {
-			@chmod($attach_dir, 0777);
-			if ( ! is_writable($attach_dir) )
-			{
-				$error_msg[] = '>Folder <strong>/uploads/articles</strong> is not writable by PHP.';
-		   	}
-	    }
-	}
-	else
-	{
-		$error_msg[] = 'Folder <strong>/uploads/articles</strong> is missing.';
-	}
-	
-    $attach_dir = AUTOCAPTCHAS_PATH . 'uploads/tickets';
-	if ( ! file_exists($attach_dir) )
-	{
-	    @mkdir($attach_dir, 0755);
-	}
-	
-	if ( is_dir($attach_dir) )
-    {
-	    if ( ! is_writable($attach_dir) )
-	    {
-			@chmod($attach_dir, 0777);
-			if ( ! is_writable($attach_dir) )
-			{
-				$error_msg[] = '>Folder <strong>/uploads/tickets</strong> is not writable by PHP.';
-		   	}
-	    }
-	}
-	else
-	{
-		$error_msg[] = 'Folder <strong>/uploads/tickets</strong> is missing.';
+		$error_msg[] = 'File ' . dirname(dirname(__FILE__)) . '/lib/<strong>config.ini</strong> is missing.';
 	}
 	
     if ( count($error_msg) ){
@@ -326,8 +282,7 @@ if($_REQUEST['license'] == 'agree'){
 			$db->exec($query);
 			
 			autocaptchas_saveconfigfile($_REQUEST['db_host'], $_REQUEST['db_port'], $_REQUEST['db_name'], $_REQUEST['db_user'], $_REQUEST['db_password'], $_REQUEST['base_url'], $_REQUEST['site_name'], $_REQUEST['support'], $_REQUEST['recaptchas'], $_REQUEST['images'], $_REQUEST['audios'], $_REQUEST['admin_email']);
-
-			//header('location: install.php?result=completed');
+			header('location: install.php?result=completed');
 		}
 	}
 	autocaptchas_checksetup();
