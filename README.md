@@ -1,5 +1,5 @@
-# AutoCAPTCHAs: https://autocaptchas.com
-A complete CAPTCHA solving web service website solution that accepts customers and has its very own API.
+# AutoCAPTCHAs
+A complete CAPTCHA solving web service website solution that accepts customers and has its very own API. See live working example at https://autocaptchas.com
 
 -----
 
@@ -25,7 +25,7 @@ Done...
 
 -----
 
-## How it Works?:
+## How it Works?
 
 Fun Facts! Well, it is very simple and easy. You sign-up with us and load or top-up your account with USD credits and you get to use our Reseller API. This reseller API is a very easy to use API to handle Customer Accounts, Payments, and CAPTCHA Solving operations.
 
