@@ -25,7 +25,7 @@ Done...
 
 -----
 
-#How it Works?:
+## How it Works?:
 
 Fun Facts! Well, it is very simple and easy. You sign-up with us and load or top-up your account with USD credits and you get to use our Reseller API. This reseller API is a very easy to use API to handle Customer Accounts, Payments, and CAPTCHA Solving operations.
 
