@@ -15,6 +15,9 @@ var $data = array();
  */
 var $sections = TRUE;
 
+
+public function __construct() {}
+
 /** Parse INI file
  * @param
 String

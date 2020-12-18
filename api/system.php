@@ -2,7 +2,7 @@
 require_once('sqlite3.php');
 
 class API {
-	private $version = '1.1.2';
+	private $version = '1.1.6';
 	private $db = NULL;
 	private $ini = NULL;
 	private $settings = NULL;

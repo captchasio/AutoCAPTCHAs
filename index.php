@@ -3,11 +3,16 @@
  * @package AutoCAPTCHAs
  * @website: http://autocaptchas.com
  * @author Glenn Prialde
- * @since 1.1.5
+ * @since 1.1.6
  */
  
 ini_set('display_errors', 0);
 error_reporting(0);
+
+if (file_exists('./install/index.php')) {
+	@header('Location: install');
+	exit;
+}
 
 require_once('lib/curl.php');
 require_once('lib/db/sql.php');
