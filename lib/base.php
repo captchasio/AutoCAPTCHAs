@@ -2319,6 +2319,22 @@ final class Base extends Prefab implements ArrayAccess {
 	private function __clone() {
 	}
 
+    function nice_number($n) {
+        // first strip any formatting;
+        $n = (0+str_replace(",", "", $n));
+
+        // is this a number?
+        if (!is_numeric($n)) return false;
+
+        // now filter it;
+        if ($n > 1000000000000) return round(($n/1000000000000), 2).' trillion';
+        elseif ($n > 1000000000) return round(($n/1000000000), 2).' billion';
+        elseif ($n > 1000000) return round(($n/1000000), 2).' million';
+        elseif ($n > 1000) return round(($n/1000), 2).' thousand';
+
+        return number_format($n);
+    }
+	
 	//! Bootstrap
 	public function __construct() {
 		// Managed directives
