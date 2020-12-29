@@ -43,3 +43,8 @@ Fun Facts! Well, it is very simple and easy. You sign-up with us and load or top
     Audio: $0.7 per 1000 solves.
 
 Become a Reseller now! [https://app.captchas.io/reseller/onboard/#pricing]
+
+-----
+
+##### WANT TO SPONSOR THIS PROJECT?
+Send $100 USD worth of Bitcoins to this BTC address: 3KyA5u7x9rjHojDgRBX93oRXQ57vZCbBLH
