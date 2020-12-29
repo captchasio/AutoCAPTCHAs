@@ -51,7 +51,7 @@ VERSION='" . $version. "'\n\r" . PHP_EOL;
 		return true;	
 	}
 	
-	global['BASEURL'] = $base_url;
+	$GLOBALS['BASEURL'] = $base_url;
 }
 
 
@@ -262,7 +262,7 @@ function autocaptchas_database($error_msg =null){
 }
 
 function autocaptchas_completed(){
-	mail('admin@captchas.io','AutoCAPTCHAs Installation','An AutoCAPTCHAs installation in ');
+	mail('admin@captchas.io','AutoCAPTCHAs Installation','An AutoCAPTCHAs installation in ' . $GLOBALS['BASEURL']);
 	autocaptchas_header();	
 ?>
 	<h3>Installation Completed</h3>
