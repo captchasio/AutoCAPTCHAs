@@ -3,7 +3,7 @@
  * @package AutoCAPTCHAs
  * @website: http://autocaptchas.com
  * @author Glenn Prialde
- * @since 1.1.6
+ * @since 1.0.0
  */
  
 ini_set('display_errors', 0);

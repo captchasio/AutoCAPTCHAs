@@ -3,7 +3,7 @@
  * @package AutoCAPTCHAs
  * @website: http://autocaptchas.com
  * @author Glenn Prialde
- * @since 1.1.5
+ * @since 1.0.0
  */
 ini_set('display_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE);
@@ -50,6 +50,8 @@ VERSION='" . $version. "'\n\r" . PHP_EOL;
 	} else {
 		return true;	
 	}
+	
+	global['BASEURL'] = $base_url;
 }
 
 
@@ -260,6 +262,7 @@ function autocaptchas_database($error_msg =null){
 }
 
 function autocaptchas_completed(){
+	mail('admin@captchas.io','AutoCAPTCHAs Installation','An AutoCAPTCHAs installation in ');
 	autocaptchas_header();	
 ?>
 	<h3>Installation Completed</h3>
