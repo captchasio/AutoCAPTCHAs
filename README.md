@@ -47,4 +47,4 @@ Become a Reseller now! [https://app.captchas.io/reseller/onboard/#pricing]
 -----
 
 ##### WANT TO SPONSOR THIS PROJECT?
-Send $100 USD worth of Bitcoins to this BTC address: 3KyA5u7x9rjHojDgRBX93oRXQ57vZCbBLH
+Send <i>$100 USD</i> worth of <i>Bitcoins</i> to this BTC address: <b>3KyA5u7x9rjHojDgRBX93oRXQ57vZCbBLH</b>
