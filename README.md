@@ -33,7 +33,7 @@ Fun Facts! Well, it is very simple and easy. You sign-up with us and load or top
 
 1. Create a Reseller account with us here [https://app.captchas.io/reseller/v2/register].
 2. Top-up your Reseller account with USD credits.
-3. Implement our Reseller API documented here [https://app.captchas.io/reseller/v2/register]. Or download and install and customize our AutoCAPTCHAs PHP+MySQL web application here [https://github.com/captchasio/AutoCAPTCHAs].
+3. Implement our Reseller API documented here [https://api.captchas.io/document/resellers/]. Or download and install and customize our AutoCAPTCHAs PHP+MySQL web application here [https://github.com/captchasio/AutoCAPTCHAs].
 4. Inform us about your new Reseller website so we can promote it here at our Resellers' portal.
 
 ##### Base price rate is:
