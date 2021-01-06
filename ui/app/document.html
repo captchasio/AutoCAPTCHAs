@@ -12,7 +12,7 @@
             <div class="widget-content">
 				<p><h3 class="title" style="margin-bottom: 20px;">API KEY: <span style="font-weight: normal;"><?=$key?></span></h3></p>
 				<div>
-					<p><h4 style="margin-bottom: 10px;">Endpoint: <span style="font-weight: normal;"><?=$base?>/in.php</span></h4></p>
+					<p><h4 style="margin-bottom: 10px;">Endpoint: <span style="font-weight: normal;"><?=$base?>in.php</span></h4></p>
 					<table border="1" cellpadding="10" cellspacing="2" style="width:100%;">
 						<tbody>
 							<tr>
@@ -87,7 +87,7 @@
 						</tbody>
 					</table>
 
-					<p><h4 style="margin-top: 10px; margin-bottom: 10px;">Endpoint: <span style="font-weight: normal;"><?=$base?>/res.php</span></h4></p>
+					<p><h4 style="margin-top: 10px; margin-bottom: 10px;">Endpoint: <span style="font-weight: normal;"><?=$base?>res.php</span></h4></p>
 					<table border="1" cellpadding="10" cellspacing="2" style="width:100%;">
 						<tbody>
 							<tr>
@@ -123,16 +123,16 @@
 				<div style="margin-top: 20px;">
 					<h4 style="margin-bottom: 10px;">Examples</h4>
 					<p>Send / Solve Request Example:</p>
-					<p><pre><code><?=$base?>/in.php?key=<?=$key?>&method=userrecaptcha&googlekey=6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-&pageurl=https://mysite.com/page/with/recaptcha</code></pre></p>
+					<p><pre><code><?=$base?>in.php?key=<?=$key?>&method=userrecaptcha&googlekey=6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-&pageurl=https://mysite.com/page/with/recaptcha</code></pre></p>
 					<p>Receive Request Example:</p>
-					<p><pre><code><?=$base?>/res.php?key=<?=$key?>&action=get&id=123456789</code></pre></p>
+					<p><pre><code><?=$base?>res.php?key=<?=$key?>&action=get&id=123456789</code></pre></p>
 					<p>CAPTCHA image:</p>
 					<p>Normal Captcha is an image that contains distorted but human-readable text. To solve the captcha user have to type the text from the image.</p>
-					<p>To solve the captcha with our service you have to submit the image with HTTP POST request to our API URL: <?=$base?>/in.php<br>
+					<p>To solve the captcha with our service you have to submit the image with HTTP POST request to our API URL: <?=$base?>in.php<br>
 					The server accepts images in multipart or base64 format.</p>
 					<p>Multipart sample form</p>
 					<p>
-<pre><code>&lt;form method="post" action="<?=$base?>/in.php" enctype="multipart/form-data">
+<pre><code>&lt;form method="post" action="<?=$base?>in.php" enctype="multipart/form-data">
 &lt;input type="hidden" name="method" value="post">
 Your key:
 &lt;input type="text" name="key" value="<?=$key?>">
@@ -144,7 +144,7 @@ The CAPTCHA file:
 					<p><?=$key?> is Your API key.</p>
 					<p>Base64 sample form</p>
 					<p>
-<pre><code>&lt;form method="post" action="<?=$base?>/in.php">
+<pre><code>&lt;form method="post" action="<?=$base?>in.php">
 &lt;input type="hidden" name="method" value="base64">
 Your key:
 &lt;input type="text" name="key" value="<?=$key?>">
@@ -153,11 +153,11 @@ The CAPTCHA file body in base64 format:
 &lt;input type="submit" value="Upload and get the ID">
 &lt;/form></code></pre>
 					</p>
-					<p>Make a 5 seconds timeout and submit a HTTP GET request to our API URL: <?=$base?>/res.php providing the captcha ID. <br>
+					<p>Make a 5 seconds timeout and submit a HTTP GET request to our API URL: <?=$base?>res.php providing the captcha ID. <br>
 					Request URL example:
 					</p>
-					<p><pre><code><?=$base?>/res.php?key=<?=$key?>&action=get&id=123456789</code></pre></p>
-					<p>If you have any issues using our service, don´t hesitate to contact our support via E-Mail [<a href="mailto:<?=$ADMINEMAIL?>"><?=$ADMINEMAIL?></a>] or Support [<a href="<?=$SUPPORT?>" target="_blank">HelpDesk Portal</a>].</p>
+					<p><pre><code><?=$base?>res.php?key=<?=$key?>&action=get&id=123456789</code></pre></p>
+					<p>If you have any issues using our service, don´t hesitate to contact our support via E-Mail [<a href="mailto:<?=$ADMINEMAIL?>"><?=$ADMINEMAIL?></a>] or via our [<a href="<?=$SUPPORT?>" target="_blank">HelpDesk Support Portal</a>].</p>
 				</div>
             </div>
             <!-- /widget-content --> 
