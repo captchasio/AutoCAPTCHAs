@@ -370,7 +370,7 @@ $f3->route('GET|POST /buy/@amount',
 				'price' => $amount,
 				'currency' => 'USD',
 				'image_url' => 'https://captchas.io/images/icon-200.png',
-				'return_url' => $f3->get('BASEURL') . '/accounts',
+				'return_url' => $f3->get('BASEURL') . 'accounts',
 				'payment_method' => 'paypal'
 			);
 			
