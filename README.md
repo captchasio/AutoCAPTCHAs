@@ -46,5 +46,4 @@ Become a Reseller now! [https://app.captchas.io/reseller/onboard/#pricing]
 
 -----
 
-##### WANT TO SPONSOR THIS PROJECT?
-Send <i>$100 USD</i> worth of <i>Bitcoins</i> to this BTC address: <b>3KyA5u7x9rjHojDgRBX93oRXQ57vZCbBLH</b>
+`<a href="https://www.buymeacoffee.com/indite">``<img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=indite&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff">``</a>`
