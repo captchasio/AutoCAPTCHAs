@@ -17,13 +17,16 @@ require_once __DIR__.'/includes/classes/classInput.php';
 require_once __DIR__.'/../lib/ini.php';
 $input = new Input_Cleaner();
 
+$version = '1.1.7';
+$package = 'AutoCAPTCHAs.COM';
+
 function autocaptchas_getquery() {
 	$query = "SET NAMES utf8;SET time_zone = '+00:00';SET foreign_key_checks = 0;SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';DROP TABLE IF EXISTS `activity`;CREATE TABLE `activity` (`id` int(11) NOT NULL AUTO_INCREMENT,`action` varchar(50) NOT NULL,`notes` varchar(255) NOT NULL,`date` timestamp NOT NULL DEFAULT current_timestamp(),PRIMARY KEY (`id`)) ENGINE=MyISAM DEFAULT CHARSET=utf8;DROP TABLE IF EXISTS `requests`;CREATE TABLE `requests` (`id` varchar(255) NOT NULL,`key` varchar(255) NOT NULL,`base64` text NOT NULL DEFAULT '',`answer` text NOT NULL DEFAULT '',`status` int(11) NOT NULL DEFAULT 0,`date` timestamp NOT NULL DEFAULT current_timestamp(),`displayed` int(11) NOT NULL DEFAULT 0,`recaptcha` int(11) NOT NULL DEFAULT 0,PRIMARY KEY (`id`)) ENGINE=MyISAM DEFAULT CHARSET=utf8;";	
 	return $query;
 }
 
-function autocaptchas_saveconfigfile($db_host, $db_port, $db_name, $db_user, $db_password, $base_url, $site_name, $support, $recaptchas, $images, $audios, $admin_email, $package = 'AutoCAPTCHAs.COM', $version = '1.1.5'){
-	$base_url = rtrim($base_url, '/');
+function autocaptchas_saveconfigfile($db_host, $db_port, $db_name, $db_user, $db_password, $base_url, $site_name, $support, $recaptchas, $images, $audios, $admin_email, $package, $version){
+$base_url = rtrim($base_url, '/');
 
 $content = "[globals]\n\r" . PHP_EOL . "
 DEBUG=3\n\r" . PHP_EOL . "
