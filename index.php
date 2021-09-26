@@ -65,7 +65,7 @@ $f3->route('GET|POST /accounts',
 		$profile = unserialize($session['profile']);
 		
 		if ($authenticated === FALSE) {
-			$f3->reroute('/accounts/login');
+			$f3->reroute($f3->get('BASEURL') . '/accounts/login');
 		}
 	
 		$f3->set('email', $profile['email']);
@@ -117,7 +117,7 @@ $f3->route('GET|POST /accounts/solves',
 		$profile = unserialize($session['profile']);
 		
 		if (!$authenticated) {
-			$f3->reroute('/accounts/login');
+			$f3->reroute($f3->get('BASEURL') . '/accounts/login');
 		}
 		
 		$f3->set('date', date('Y'));
@@ -138,7 +138,7 @@ $f3->route('GET|POST /accounts/orders',
 		$user_key = $profile['key'];
 		
 		if (!$authenticated) {
-			$f3->reroute('/accounts/login');
+			$f3->reroute($f3->get('BASEURL') . '/accounts/login');
 		}
 	
 		$curl = new Curl();
@@ -183,7 +183,7 @@ $f3->route('GET|POST /accounts/profile',
 		$profile = unserialize($session['profile']);
 		
 		if (!$authenticated) {
-			$f3->reroute('/accounts/login');
+			$f3->reroute($f3->get('BASEURL') . '/accounts/login');
 		}
 	
 		$f3->set('name', $profile['name']);
@@ -250,7 +250,7 @@ $f3->route('GET|POST /accounts/login',
 		$authenticated = $session['authenticated'] ? TRUE : FALSE;
 		
 		if ($authenticated && $ref == NULL) {
-			$f3->reroute('/accounts');
+			$f3->reroute($f3->get('BASEURL') . '/accounts');
 		} else if ($authenticated && $ref != NULL) {
 			$f3->reroute($ref);
 		}			
@@ -282,7 +282,7 @@ $f3->route('GET|POST /accounts/login',
 					} else if ($ref != NULL || !empty($ref)) {
 						$f3->reroute($ref);
 					} else {
-						$f3->reroute('/accounts');
+						$f3->reroute($f3->get('BASEURL') . '/accounts');
 					}
 				} else {
 					$f3->set('ESCAPE',FALSE);
@@ -309,7 +309,7 @@ $f3->route('GET|POST /accounts/logout',
 		$f3->set('SESSION.profile', NULL);
 		$f3->set('SESSION', session_destroy());
 		
-		$f3->reroute('/');
+		$f3->reroute($f3->get('BASEURL') . '/');
 	}
 );
 
@@ -337,7 +337,7 @@ $f3->route('GET|POST /accounts/register',
 			if (!empty($profile['id'])) {
 				$f3->set('SESSION.authenticated', TRUE);
 				$f3->set('SESSION.profile', serialize($profile));
-				$f3->reroute('/accounts');					
+				$f3->reroute($f3->get('BASEURL') . '/accounts');					
 			}
 		}
 		
@@ -405,7 +405,7 @@ $f3->route('GET|POST /buy/@amount',
 				if (!empty($profile['id'])) {
 					$f3->set('SESSION.authenticated', TRUE);
 					$f3->set('SESSION.profile', serialize($profile));
-					$f3->reroute('/buy/' . $amount);			
+					$f3->reroute($f3->get('BASEURL') . '/buy/' . $amount);			
 				}
 			}			
 		}
