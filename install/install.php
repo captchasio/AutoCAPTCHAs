@@ -287,7 +287,7 @@ if($_REQUEST['license'] == 'agree'){
 			$db=new DB\SQL('mysql:host='.$_REQUEST['db_host'].';port='.$_REQUEST['db_port'].';dbname='.$_REQUEST['db_name'],$_REQUEST['db_user'],$_REQUEST['db_password']);
 			$db->exec($query);
 			
-			autocaptchas_saveconfigfile($_REQUEST['db_host'], $_REQUEST['db_port'], $_REQUEST['db_name'], $_REQUEST['db_user'], $_REQUEST['db_password'], $_REQUEST['base_url'], $_REQUEST['site_name'], $_REQUEST['support'], $_REQUEST['recaptchas'], $_REQUEST['images'], $_REQUEST['audios'], $_REQUEST['admin_email']);
+			autocaptchas_saveconfigfile($_REQUEST['db_host'], $_REQUEST['db_port'], $_REQUEST['db_name'], $_REQUEST['db_user'], $_REQUEST['db_password'], $_REQUEST['base_url'], $_REQUEST['site_name'], $_REQUEST['support'], $_REQUEST['recaptchas'], $_REQUEST['images'], $_REQUEST['audios'], $_REQUEST['admin_email'], $package, $version);
 			header('location: install.php?result=completed');
 		}
 	}
