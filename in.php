@@ -78,7 +78,8 @@
 			$_captcha_dir = dirname(__FILE__) . "/api/data/captchas/";
 			$_captcha_file = md5($originalName . time());		
 			$md5 = md5($originalName . time());
-			$_name = hash_hmac("crc32", $md5, "hUasr8345LKnrjh1");		
+			$_name = hash("crc32b", "hUasr8345LKnrjh1" . time());		
+			$_id = hash("crc32b", "hUasr8345LKnrjh1" . time());
 			
 			$types = explode(".", $originalName);
 			$type = $types[count($types) - 1];
@@ -120,7 +121,7 @@
 			$answer = $raw[2];
 			$elapsed = $raw[1];	
 						
-			$id = $api->save_request($answer, NULL, to_base64($_captcha_file), 0, 0, $_user_key);
+			$id = $api->save_request($_id, $answer, NULL, to_base64($_captcha_file), 0, 0, $_user_key);
 			$api->set_request_status($id, 1);
 			
 			if ($_json == 1) {
@@ -131,7 +132,9 @@
 			} else {
 				print 'OK|'. $id;	
 			}				
-		} else if (strtolower(trim($_method)) == 'base64') {				
+		} else if (strtolower(trim($_method)) == 'base64') {	
+			$_id = hash("crc32b", "hUasr8345LKnrjh1" . time());
+			
 			$captcha = $_REQUEST['body'];
 			
 			$_captcha_dir = dirname(__FILE__) . "/api/data/captchas/";
@@ -170,7 +173,7 @@
 			$answer = $raw[2];
 			$elapsed = $raw[1];				
 						
-			$id = $api->save_request($answer, NULL, $base64, 0, 0, $_user_key);
+			$id = $api->save_request($_id, $answer, NULL, $base64, 0, 0, $_user_key);
 			$api->set_request_status($id, 1);
 			
 			if ($_json == 1) {
@@ -182,6 +185,8 @@
 				print 'OK|'. $id;	
 			}				
 		} else if (strtolower(trim($_method)) == 'userrecaptcha') {
+			$_id = hash("crc32b", "hUasr8345LKnrjh1" . time());
+			
 			$_proxy = urldecode(trim($_REQUEST['proxy']));	
 			$_proxy_type = urldecode(trim($_REQUEST['proxy_type']));
 				
@@ -194,7 +199,7 @@
 					
 			$data = json_encode(array('answer' => '', 'recaptcha' => 1, 'elapsed' => $elapsed, 'token' => NULL, 'images' => array('base64' => NULL)));
 						
-			$id = $api->save_request($token, NULL, 'CAPCHA_NOT_READY', 0, 1, $_user_key);
+			$id = $api->save_request($_id, $token, NULL, 'CAPCHA_NOT_READY', 0, 1, $_user_key);
 		
 			if ($_json == 1) {
 				$return = array('status' => 1, 'request' => $id);
