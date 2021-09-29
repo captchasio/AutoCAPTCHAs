@@ -12,6 +12,7 @@
 	$_method = trim($_REQUEST['method']);
 	$_ip = $_SERVER['REMOTE_ADDR'];
 	$_json = $_REQUEST['json'] == 1 ? 1 : 0;
+	$_version = empty($_REQUEST['version']) ? 'v2' : $_REQUEST['version'];
 	
 	function http_get($url) {
 		$ch = curl_init();
@@ -121,7 +122,7 @@
 			$answer = $raw[2];
 			$elapsed = $raw[1];	
 						
-			$id = $api->save_request($_id, $answer, NULL, to_base64($_captcha_file), 0, 0, $_user_key);
+			$id = $api->save_request($answer, 'CAPCHA_NOT_READY', to_base64($_captcha_file), 0, 0, $_user_key);
 			$api->set_request_status($id, 1);
 			
 			if ($_json == 1) {
@@ -173,7 +174,7 @@
 			$answer = $raw[2];
 			$elapsed = $raw[1];				
 						
-			$id = $api->save_request($_id, $answer, NULL, $base64, 0, 0, $_user_key);
+			$id = $api->save_request($answer, 'CAPCHA_NOT_READY', $base64, 0, 0, $_user_key);
 			$api->set_request_status($id, 1);
 			
 			if ($_json == 1) {
@@ -190,16 +191,38 @@
 			$_proxy = urldecode(trim($_REQUEST['proxy']));	
 			$_proxy_type = urldecode(trim($_REQUEST['proxy_type']));
 				
-			$url = 'https://api.captchas.io/reseller/recaptcha_task?key='.$key.'&user_key=' . $_user_key . '&version=' . trim($_REQUEST['version']) . '&min_score=' . trim($_REQUEST['min_score']) . '&method=userrecaptcha&googlekey=' . trim($_REQUEST['googlekey']) . '&pageurl=' . urlencode(urldecode(trim($_REQUEST['pageurl'])));
-			$answer = http_get($url);
+			$url = 'https://api.captchas.io/reseller/recaptcha_task?key='.$key.'&user_key=' . $_user_key . '&version=' . trim($_version) . '&min_score=' . trim($_REQUEST['min_score']) . '&method=userrecaptcha&googlekey=' . trim($_REQUEST['googlekey']) . '&pageurl=' . urlencode(urldecode(trim($_REQUEST['pageurl'])));
+			
+			$ch = curl_init();
+			curl_setopt($ch,CURLOPT_URL, 'https://api.captchas.io/reseller/recaptcha_task');
+			curl_setopt($ch,CURLOPT_HEADER, FALSE);
+			curl_setopt($ch,CURLOPT_POST, TRUE);
+			curl_setopt($ch,CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
+			curl_setopt($ch, CURLOPT_USERAGENT,  "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1a2pre) Gecko/2008073000 Shredder/3.0a2pre ThunderBrowse/3.2.1.8");					
+			curl_setopt($ch,CURLOPT_POSTFIELDS, $postData);
+			curl_setopt($ch,CURLOPT_RETURNTRANSFER, TRUE);
+			curl_setopt($ch,CURLOPT_FOLLOWLOCATION, TRUE);			
+			curl_setopt($ch,CURLOPT_CONNECTTIMEOUT, 300);
+			curl_setopt($ch,CURLOPT_TIMEOUT, 300);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, array(
+				'key' => $key,
+				'user_key' => $_user_key,
+				'version' => $_version,
+				'min_score' => $_REQUEST['min_score'],
+				'method' => 'userrecaptcha',
+				'googlekey' => $_REQUEST['googlekey'],
+				'pageurl' => urldecode($_REQUEST['pageurl']),
+			));			
+			$answer = curl_exec($ch);
+			curl_close($ch);
 
 			$_rest = explode("|", $answer);	
 			$token = trim($_rest[2]);
 			$elapsed = $_rest[1];
 					
-			$data = json_encode(array('answer' => '', 'recaptcha' => 1, 'elapsed' => $elapsed, 'token' => NULL, 'images' => array('base64' => NULL)));
+			$data = json_encode(array('answer' => '', 'recaptcha' => 1, 'elapsed' => $elapsed, 'token' => $token, 'images' => array('base64' => NULL)));
 						
-			$id = $api->save_request($_id, $token, NULL, 'CAPCHA_NOT_READY', 0, 1, $_user_key);
+			$id = $api->save_request($token, 'CAPCHA_NOT_READY', NULL, 0, 1, $_user_key);
 		
 			if ($_json == 1) {
 				$return = array('status' => 1, 'request' => $id);

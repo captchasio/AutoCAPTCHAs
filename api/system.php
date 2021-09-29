@@ -36,14 +36,9 @@ class API {
 	function save_request($id, $answer, $base64, $status, $recaptcha, $key) {		
 		$content = json_encode(array('answer' => $answer, 'base64' => $base64, 'recaptcha' => $recaptcha, 'status' => $status));
 		
-		if ($recaptcha == 1) {
-			$this->db->query("REPLACE INTO `requests`(`id`, `key`, `base64`, `answer`, `status`, `recaptcha`) VALUES ('" . $id . "', '" . $key . "', '" . $base64 . "', '" . $answer . "', " . $status . ", 1)");
-		} else {
-			$this->db->query("REPLACE INTO `requests`(`id`, `key`, `base64`, `answer`, `status`, `recaptcha`) VALUES ('" . $id . "', '" . $key . "', '" . $base64 . "', '" . $answer . "', " . $status . ", 0)");
-		}
+		$recaptcha = empty($recaptcha) ? 0 : $recaptcha;
 		
-		//$data = $result->fetchArray();
-		//$id = $result['id'];		
+		$this->db->query("REPLACE INTO `requests`(`id`, `key`, `base64`, `answer`, `status`, `recaptcha`) VALUES ('" . $id . "', '" . $key . "', '" . $base64 . "', '" . $answer . "', " . $status . ", " . $recaptcha . ")");	
 		
 		return $id;
 	}	
