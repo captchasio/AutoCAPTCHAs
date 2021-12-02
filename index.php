@@ -14,6 +14,19 @@ if (file_exists('./install/index.php')) {
 	exit;
 }
 
+function http_get($url) {
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_HEADER, FALSE);					
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 300);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 300);
+	$raw=curl_exec($ch);
+	curl_close($ch);		
+	
+	return $raw;
+}
+	
 require_once('lib/curl.php');
 require_once('lib/db/sql.php');
 $f3=require('lib/base.php');
@@ -77,9 +90,12 @@ $f3->route('GET|POST /accounts',
 		
 		$curl = new Curl();
 		
-		$response = $curl->get('https://api.captchas.io/reseller/history?key=' . $reseller_key . '&user_key=' . $user_key);
+		$response = $curl->get('http://api.captchas.io/reseller/history?key=' . $reseller_key . '&user_key=' . $user_key);
+	
 		$history = json_decode($response, TRUE);
-
+		
+		$f3->set('activities', $history['solves']);
+		
 		$response2 = $curl->get('https://api.captchas.io/reseller/get_user?key=' . $reseller_key . '&user_key=' . $user_key);
 		$user = json_decode($response2, TRUE);
 		
@@ -93,12 +109,11 @@ $f3->route('GET|POST /accounts',
 		} else {
 			$solves = $history['total'];
 		}
-		
+				
 		$f3->set('recaptchas', $f3->nice_number($history['recaptcha']));
 		$f3->set('images', $f3->nice_number($history['image']));
 		$f3->set('audios', $f3->nice_number($history['audio']));
-		$f3->set('solves', $f3->nice_number($solves));
-		$f3->set('activities', $history['solves']);
+		$f3->set('solves', $f3->nice_number($solves));		
 		
 		$f3->set('content','app/index.html');
 		echo View::instance()->render('app/layout.html');

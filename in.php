@@ -117,7 +117,7 @@
 			));			
 			$raw = curl_exec($ch);
 			curl_close($ch);		
-			
+
 			$raw = explode("|", $raw);
 			$answer = $raw[2];
 			$elapsed = $raw[1];	

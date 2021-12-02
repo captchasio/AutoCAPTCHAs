@@ -78,8 +78,8 @@
 		
 		if ($recaptcha != 0) {
 			$url = 'https://api.captchas.io/reseller/recaptcha_result?key='.$key.'&user_key='.$_user_key.'&captcha_id=' . $_REQUEST['id'];
-			$answer = trim(get_result($url));		
-			//$answer = trim(http_get($url));
+			//$answer = trim(get_result($url));		
+			$answer = trim(http_get($url));
 			
 			$_rest = explode("|", $answer);	
 			$token = trim($_rest[2]);			
@@ -131,8 +131,8 @@
 			}				
 		} else {
 			$url = 'https://api.captchas.io/reseller/image_result?key='.$key.'&user_key='.$_user_key.'&captcha_id=' . $_REQUEST['id'];
-			$answer = trim(get_result($url));
-			//$answer = trim(http_get($url));
+			//$answer = trim(get_result($url));
+			$answer = trim(http_get($url));
 			
 			$_rest = explode("|", $answer);	
 			$token = trim($_rest[2]);			
