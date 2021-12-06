@@ -77,7 +77,7 @@
 		$recaptcha = $api->get_recaptcha_id($_REQUEST['id']);
 		
 		if ($recaptcha != 0) {
-			$url = 'https://api.captchas.io/reseller/recaptcha_result?key='.$key.'&user_key='.$_user_key.'&captcha_id=' . $_REQUEST['id'];
+			$url = 'http://api.captchas.io/reseller/recaptcha_result?key='.$key.'&user_key='.$_user_key.'&captcha_id=' . $_REQUEST['id'];
 			//$answer = trim(get_result($url));		
 			$answer = trim(http_get($url));
 			
@@ -89,12 +89,28 @@
 				$data = json_encode(array('recaptcha' => 1, 'answer' => 'CAPCHA_NOT_READY', 'base64' => NULL));
 				$api->set_request_data($data, trim($_REQUEST['id']), 0);			
 				
-				print 'CAPCHA_NOT_READY';
+				//print 'CAPCHA_NOT_READY';
+				if ($_json == 1) {
+					$return = array('status' => 0, 'request' => 'CAPCHA_NOT_READY');
+					$json_return = json_encode($return);
+					header('Content-Type: application/json');
+					print $json_return;
+				} else {
+					print 'CAPCHA_NOT_READY';	
+				}				
 			} else if ($answer == 'ERROR_CAPTCHA_UNSOLVABLE' || $answer == 'ERROR_WRONG_CAPTCHA_ID') {			
 				$data = json_encode(array('recaptcha' => 1, 'answer' => 'ERROR_CAPTCHA_IS_UNSOLVABLE', 'base64' => NULL));
 				$api->set_request_data($data, trim($_REQUEST['id']), 2);			
 				
-				print 'ERROR_CAPTCHA_IS_UNSOLVABLE';				
+				//print 'ERROR_CAPTCHA_IS_UNSOLVABLE';				
+				if ($_json == 1) {
+					$return = array('status' => 0, 'request' => 'ERROR_CAPTCHA_IS_UNSOLVABLE');
+					$json_return = json_encode($return);
+					header('Content-Type: application/json');
+					print $json_return;
+				} else {
+					print 'ERROR_CAPTCHA_IS_UNSOLVABLE';	
+				}				
 			} else {
 				if (empty($token) && ($answer == 'ERROR_CAPTCHA_UNSOLVABLE' || $answer == 'ERROR_WRONG_CAPTCHA_ID' || $answer == 'CAPCHA_NOT_READY' || $answer == 'ERROR')) {
 					$error = 1;
@@ -115,13 +131,13 @@
 				$displayed = $api->is_displayed($_REQUEST['id']);	
 				
 				if ($displayed == 0 && $error == 0) {
-					$user = http_get('https://api.captchas.io/reseller/get_user?key='.$key.'&user_key='.$_user_key);
+					$user = http_get('http://api.captchas.io/reseller/get_user?key='.$key.'&user_key='.$_user_key);
 					$user = json_decode($user, TRUE);
 					
 					$rate = $api->recaptcha_rate();
 					$credits = $user['credits'] - $rate;
 					
-					http_get('https://api.captchas.io/reseller/update_user?key='.$key.'&user_id='.$user['id'].'&credits='.$credits);
+					http_get('http://api.captchas.io/reseller/update_user?key='.$key.'&user_id='.$user['id'].'&credits='.$credits);
 				}
 				
 				$data = json_encode(array('recaptcha' => 1, 'answer' => $token, 'base64' => NULL, 'displayed' => 1));
@@ -130,7 +146,7 @@
 				$api->set_request_data($data, trim($_REQUEST['id']), 1);				
 			}				
 		} else {
-			$url = 'https://api.captchas.io/reseller/image_result?key='.$key.'&user_key='.$_user_key.'&captcha_id=' . $_REQUEST['id'];
+			$url = 'http://api.captchas.io/reseller/image_result?key='.$key.'&user_key='.$_user_key.'&captcha_id=' . $_REQUEST['id'];
 			//$answer = trim(get_result($url));
 			$answer = trim(http_get($url));
 			
@@ -143,12 +159,28 @@
 				$data = json_encode(array('recaptcha' => 0, 'answer' => 'CAPCHA_NOT_READY', 'base64' => $base64));
 				$api->set_request_data($data, trim($_REQUEST['id']), 0);			
 				
-				print 'CAPCHA_NOT_READY';	
+				//print 'CAPCHA_NOT_READY';	
+				if ($_json == 1) {
+					$return = array('status' => 0, 'request' => 'CAPCHA_NOT_READY');
+					$json_return = json_encode($return);
+					header('Content-Type: application/json');
+					print $json_return;
+				} else {
+					print 'CAPCHA_NOT_READY';	
+				}				
 			} else if ($answer == 'ERROR_CAPTCHA_UNSOLVABLE' || $answer == 'ERROR_WRONG_CAPTCHA_ID') {
 				$data = json_encode(array('recaptcha' => 0, 'answer' => 'ERROR_CAPTCHA_IS_UNSOLVABLE', 'base64' => $base64));
 				$api->set_request_data($data, trim($_REQUEST['id']), 2);			
 				
-				print 'ERROR_CAPTCHA_IS_UNSOLVABLE';				
+				//print 'ERROR_CAPTCHA_IS_UNSOLVABLE';	
+				if ($_json == 1) {
+					$return = array('status' => 0, 'request' => 'ERROR_CAPTCHA_IS_UNSOLVABLE');
+					$json_return = json_encode($return);
+					header('Content-Type: application/json');
+					print $json_return;
+				} else {
+					print 'ERROR_CAPTCHA_IS_UNSOLVABLE';	
+				}				
 			} else {
 				if (empty($token) && ($answer == 'ERROR_CAPTCHA_UNSOLVABLE' || $answer == 'ERROR_WRONG_CAPTCHA_ID' || $answer == 'CAPCHA_NOT_READY' || $answer == 'ERROR')) {
 					$error = 1;
@@ -169,13 +201,13 @@
 				$displayed = $api->is_displayed($_REQUEST['id']);
 
 				if ($displayed == 0 && $error == 0) {
-					$user = http_get('https://api.captchas.io/reseller/get_user?key='.$key.'&user_key='.$_user_key);
+					$user = http_get('http://api.captchas.io/reseller/get_user?key='.$key.'&user_key='.$_user_key);
 					$user = json_decode($user, TRUE);
 					
 					$rate = $api->image_rate();
 					$credits = $user['credits'] - $rate;
 					
-					http_get('https://api.captchas.io/reseller/update_user?key='.$key.'&user_id='.$user['id'].'&credits='.$credits);
+					http_get('http://api.captchas.io/reseller/update_user?key='.$key.'&user_id='.$user['id'].'&credits='.$credits);
 				}
 
 				$data = json_encode(array('recaptcha' => 0, 'answer' => $token, 'base64' => $base64, 'displayed' => 1));
@@ -184,5 +216,33 @@
 				$api->set_request_data($data, trim($_REQUEST['id']), 1);				
 			}	
 		}
-	} 
+	} else if (strtolower(trim($_REQUEST['action'])) == "getbalance") {
+		$user = http_get('http://api.captchas.io/reseller/get_user?key='.$key.'&user_key='.$_user_key);
+		$user = json_decode($user, TRUE);
+		
+		$credits = $user['credits'];
+
+		if ($_json == 1) {
+			$return = array('status' => 1, 'request' => $credits);			
+			$json_return = json_encode($return);
+			
+			@header('Content-Type: application/json');
+			
+			print $json_return;
+		} else {
+			print 'OK|'. $credits;	
+		}		
+	} else if (strtolower(trim($_REQUEST['action'])) == "userinfo") {
+		$user = http_get('http://api.captchas.io/reseller/get_user?key='.$key.'&user_key='.$_user_key);
+		$user = json_decode($user, TRUE);
+		
+		$credits = $user['credits'];
+		
+		$return = array('email' => $user['email'], 'user_id' => 1, 'valute' => 'USD', 'balance' => $credits, 'key_type' => 'customer');
+		$json_return = json_encode($return);
+		
+		@header('Content-Type: application/json');
+		
+		print $json_return;
+	}
 ?>

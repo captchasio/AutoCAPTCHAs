@@ -50,13 +50,13 @@ $f3->set('AUDIORATE', $config['globals']['AUDIORATE']);
 $f3->set('PACKAGE', $config['globals']['PACKAGE']);
 $f3->set('VERSION', $config['globals']['VERSION'] . '-Release');
 
-$db=new DB\SQL('mysql:host='.$config['globals']['DBHOST'].';port='.$config['globals']['DBPORT'].';dbname='.$config['globals']['DBNAME'],$config['globals']['DBUSERNAME'],$config['globals']['DBPASSWORD']);
+//$db=new DB\SQL('mysql:host='.$config['globals']['DBHOST'].';port='.$config['globals']['DBPORT'].';dbname='.$config['globals']['DBNAME'],$config['globals']['DBUSERNAME'],$config['globals']['DBPASSWORD']);
 
 $session = $f3->get('SESSION');
 $profile = unserialize($session['profile']);
 $ukey =  $profile['key'];
 
-$f3->set('solves_t', $db->exec("SELECT * FROM `requests` WHERE `key` = '" . $ukey . "' AND `status` = 1 AND DATE(`date`) = DATE(NOW())"));
+//$f3->set('solves_t', $db->exec("SELECT * FROM `requests` WHERE `key` = '" . $ukey . "' AND `status` = 1 AND DATE(`date`) = DATE(NOW())"));
 
 $f3->route('GET|POST /',
 	function($f3) {
@@ -122,24 +122,39 @@ $f3->route('GET|POST /accounts',
 
 $f3->route('GET|POST /accounts/solves',
 	function($f3) {
+		$session = $f3->get('SESSION');
+		$authenticated = $session['authenticated'] ? TRUE : FALSE;
+		$profile = unserialize($session['profile']);
+		
+		$f3->set('email', $profile['email']);
+		$f3->set('key', $profile['key']);
+		
 		$f3->set('accounts', '');
 		$f3->set('document', '');
 		$f3->set('profile', '');
 		$f3->set('solves', 'active');
 		
-		$session = $f3->get('SESSION');
-		$authenticated = $session['authenticated'] ? TRUE : FALSE;
-		$profile = unserialize($session['profile']);
-		
 		if (!$authenticated) {
 			$f3->reroute($f3->get('BASEURL') . '/accounts/login');
 		}
+		
+		$reseller_key = $f3->get('APIKEY');
+		$user_key = $profile['key'];
+		
+		$curl = new Curl();
+		
+		$response = $curl->get('http://api.captchas.io/reseller/history?key=' . $reseller_key . '&user_key=' . $user_key);
+	
+		$history = json_decode($response, TRUE);
+		
+		$f3->set('activities', $history['solves']);
 		
 		$f3->set('date', date('Y'));
 		$f3->set('email', $profile['email']);
 		
 		$f3->set('content','app/solves.html');
-		echo \Template::instance()->render('app/table_layout.html');
+		//echo \Template::instance()->render('app/table_layout.html');
+		echo View::instance()->render('app/layout.html');
 	}
 );
 

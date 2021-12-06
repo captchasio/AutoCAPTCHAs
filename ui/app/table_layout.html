@@ -92,7 +92,8 @@
 </div>
 <!-- /subnavbar -->
 
-<include href="{{ @content }}" />
+<!--<include href="{{ @content }}" />-->
+<?php echo $this->render(Base::instance()->get('content')); ?>
 
 <!-- /main -->
 <div class="extra">

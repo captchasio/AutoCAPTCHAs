@@ -55,7 +55,7 @@
 		return $value;
 	}											
 	
-	$credits = http_get('https://api.captchas.io/reseller/get_user_balance?key=' . $key . '&user_key=' . $_user_key);
+	$credits = http_get('http://api.captchas.io/reseller/get_user_balance?key=' . $key . '&user_key=' . $_user_key);
 	
 	if ($credits >= 1) {
 		if (strtolower(trim($_method)) == 'post') {	
@@ -100,7 +100,7 @@
 			}																																										
 
 			$ch = curl_init();
-			curl_setopt($ch,CURLOPT_URL, 'https://api.captchas.io/reseller/image_task');
+			curl_setopt($ch,CURLOPT_URL, 'http://api.captchas.io/reseller/image_task');
 			curl_setopt($ch,CURLOPT_HEADER, FALSE);
 			curl_setopt($ch,CURLOPT_POST, TRUE);
 			curl_setopt($ch,CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
@@ -149,10 +149,10 @@
 			$_captcha_file = realpath($_captcha_file);
 			@shell_exec('chmod 775 ' . $_captcha_file);
 			
-			$base64 = to_base64($_captcha_file);
+			//$base64 = to_base64($_captcha_file);
 			
 			$ch = curl_init();
-			curl_setopt($ch,CURLOPT_URL, 'https://api.captchas.io/reseller/image_task');
+			curl_setopt($ch,CURLOPT_URL, 'http://api.captchas.io/reseller/image_task');
 			curl_setopt($ch,CURLOPT_HEADER, FALSE);
 			curl_setopt($ch,CURLOPT_POST, TRUE);
 			curl_setopt($ch,CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
@@ -165,7 +165,7 @@
 			curl_setopt($ch, CURLOPT_POSTFIELDS, array(
 				'key' => $key,
 				'user_key' => $_user_key,
-				'body' => $base64
+				'body' => $captcha
 			));			
 			$raw = curl_exec($ch);
 			curl_close($ch);		
@@ -174,7 +174,7 @@
 			$answer = $raw[2];
 			$elapsed = $raw[1];				
 						
-			$id = $api->save_request($answer, 'CAPCHA_NOT_READY', $base64, 0, 0, $_user_key);
+			$id = $api->save_request($answer, 'CAPCHA_NOT_READY', 'data:image/jpg;base64,' . $captcha, 0, 0, $_user_key);
 			$api->set_request_status($id, 1);
 			
 			if ($_json == 1) {
@@ -191,10 +191,10 @@
 			$_proxy = urldecode(trim($_REQUEST['proxy']));	
 			$_proxy_type = urldecode(trim($_REQUEST['proxy_type']));
 				
-			$url = 'https://api.captchas.io/reseller/recaptcha_task?key='.$key.'&user_key=' . $_user_key . '&version=' . trim($_version) . '&min_score=' . trim($_REQUEST['min_score']) . '&method=userrecaptcha&googlekey=' . trim($_REQUEST['googlekey']) . '&pageurl=' . urlencode(urldecode(trim($_REQUEST['pageurl'])));
+			$url = 'http://api.captchas.io/reseller/recaptcha_task?key='.$key.'&user_key=' . $_user_key . '&version=' . trim($_version) . '&min_score=' . trim($_REQUEST['min_score']) . '&method=userrecaptcha&googlekey=' . trim($_REQUEST['googlekey']) . '&pageurl=' . urlencode(urldecode(trim($_REQUEST['pageurl'])));
 			
 			$ch = curl_init();
-			curl_setopt($ch,CURLOPT_URL, 'https://api.captchas.io/reseller/recaptcha_task');
+			curl_setopt($ch,CURLOPT_URL, 'http://api.captchas.io/reseller/recaptcha_task');
 			curl_setopt($ch,CURLOPT_HEADER, FALSE);
 			curl_setopt($ch,CURLOPT_POST, TRUE);
 			curl_setopt($ch,CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
