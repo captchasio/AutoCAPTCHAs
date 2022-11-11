@@ -1,5 +1,5 @@
 # AutoCAPTCHAs
-A complete CAPTCHA solving web service website solution that accepts customers and has its very own API. See live working example at https://autocaptchas.com
+A complete CAPTCHA solving web service website solution that accepts customers and has its very own API. See live working example at http://captchacoins.com
 
 -----
 
