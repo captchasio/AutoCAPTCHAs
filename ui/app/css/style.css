@@ -10,7 +10,9 @@ Bootstrap Admin Template by EGrappler.com
 html {
 	font-family: "Montserrat", Arial, sans-serif;
   font-size: 62.5%;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);	
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	height: 100%;
+	min-height: 100%;
 }
 
 body {
@@ -18,7 +20,7 @@ body {
 	font-size: 12px;
 	font-family: "Montserrat", Arial, sans-serif;
 	height: 100% !important;
-	min-height: 100% !important;
+	min-height: 100% !important;	
 }
     
 p { 
@@ -277,9 +279,10 @@ textarea {
 */
 
 .main {
-	padding-bottom: 2em;
-	
-	border-bottom: 1px solid #000;
+	padding-bottom: 2em;	
+	/*border-bottom: 1px solid #000;*/
+	min-height: 100% !important;
+	height: 100% !important;
 }
 
 
@@ -288,12 +291,12 @@ textarea {
 [5. Extra / .extra]
 */
 
-.extra {
+/*.extra {
 
 	border-top: 1px solid #585858;
 	border-bottom: 1px solid #000;
 
-}
+}*/
 
 .extra-inner {
 	padding: 20px 0;
@@ -301,7 +304,7 @@ textarea {
 	font-size: 11px;
 	color: #BBB;
 	
-	background: #1A1A1A;
+	background: #f9f6f1;
 }
 
 .extra a {
