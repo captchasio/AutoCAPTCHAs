@@ -6,8 +6,8 @@
  * @since 1.0.0
  */
  
-ini_set('display_errors', 0);
-error_reporting(0);
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
 if (file_exists('./install/index.php')) {
 	@header('Location: install');
@@ -110,10 +110,10 @@ $f3->route('GET|POST /accounts',
 			$solves = $history['total'];
 		}
 				
-		$f3->set('recaptchas', $f3->nice_number($history['recaptcha']));
-		$f3->set('images', $f3->nice_number($history['image']));
-		$f3->set('audios', $f3->nice_number($history['audio']));
-		$f3->set('solves', $f3->nice_number($solves));		
+		$f3->set('recaptchas', $f3->nice_number(intval($history['recaptcha'])));
+		$f3->set('images', $f3->nice_number(intval($history['image'])));
+		$f3->set('audios', $f3->nice_number(intval($history['audio'])));
+		$f3->set('solves', $f3->nice_number(intval($solves)));		
 		
 		$f3->set('content','app/index.html');
 		echo View::instance()->render('app/layout.html');
@@ -294,7 +294,7 @@ $f3->route('GET|POST /accounts/login',
 			$curl = new Curl();
 	
 			$response = $curl->get('https://api.captchas.io/reseller/login_user?key=' . $key . '&user_email=' . $params['email'] . '&user_password=' . $params['password']);
-
+			print_r($response);
 			if ($response == 'ERROR_INVALID_PASSWORD') {
 				$f3->set('ESCAPE',FALSE);
 				$f3->set('errors', '<div><div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> Invalid password!</div></div>');
@@ -361,10 +361,9 @@ $f3->route('GET|POST /accounts/register',
 			);
 			
 			$response = $curl->post('https://api.captchas.io/reseller/register_user', $data);
+			$profile = json_decode($response, TRUE);			
 			
-			$profile = json_decode($response, TRUE);
-
-			if (!empty($profile['id'])) {
+			if (!empty($profile['id'])) {				
 				$f3->set('SESSION.authenticated', TRUE);
 				$f3->set('SESSION.profile', serialize($profile));
 				$f3->reroute($f3->get('BASEURL') . '/accounts');					
@@ -387,6 +386,10 @@ $f3->route('GET|POST /buy/@amount',
 		$f3->set('amount', $amount);
 		$f3->set('name', $profile['name']);
 		$f3->set('email', $profile['email']);
+		
+		if ($amount < 5) {
+			$f3->reroute($f3->get('BASEURL'));	
+		}
 		
 		if (isset($submit) && $submit == 'pay') {
 			$curl = new Curl();
@@ -428,8 +431,7 @@ $f3->route('GET|POST /buy/@amount',
 					'ip' => $ip
 				);
 				
-				$response = $curl->post('https://api.captchas.io/reseller/register_user', $data);
-				
+				$response = $curl->post('https://api.captchas.io/reseller/register_user', $data);				
 				$profile = json_decode($response, TRUE);
 
 				if (!empty($profile['id'])) {
@@ -455,8 +457,12 @@ $f3->route('POST /buy',
 		$params = $f3->get('POST');
 		$amount = $params['amount'];
 		
-		$f3->set('amount', $amount);
-		$f3->reroute('/buy/' . $amount);	
+		if ($amount < 5) {
+			$f3->reroute($f3->get('BASEURL'));	
+		} else {
+			$f3->set('amount', $amount);
+			$f3->reroute('/buy/' . $amount);	
+		}
 	}
 );
 

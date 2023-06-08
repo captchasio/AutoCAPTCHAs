@@ -1,6 +1,10 @@
 <?php
-	ini_set('display_errors', 1);
-	error_reporting(E_ERROR);	
+	ini_set('display_errors', 0);
+	error_reporting(0);	
+	
+	@header('Cache-Control: no-cache, no-store, must-revalidate');
+	@header('Pragma: no-cache');
+	@header('Expires: 0');
 	
 	require_once('api/system.php');
 	
@@ -12,7 +16,7 @@
 	$_method = trim($_REQUEST['method']);
 	$_ip = $_SERVER['REMOTE_ADDR'];
 	$_json = $_REQUEST['json'] == 1 ? 1 : 0;
-	$_version = empty($_REQUEST['version']) ? 'v2' : $_REQUEST['version'];
+	$_version = empty(trim($_REQUEST['version'])) || $_REQUEST['version'] == '' ? 'v2' : trim($_REQUEST['version']);
 	
 	function http_get($url) {
 		$ch = curl_init();
@@ -57,7 +61,7 @@
 	
 	$credits = http_get('http://api.captchas.io/reseller/get_user_balance?key=' . $key . '&user_key=' . $_user_key);
 	
-	if ($credits >= 1) {
+	if ($credits > 0) {
 		if (strtolower(trim($_method)) == 'post') {	
 			$size = $_FILES['file']['size'];
 			$type = $_FILES['file']['type'];			
@@ -174,7 +178,7 @@
 			$answer = $raw[2];
 			$elapsed = $raw[1];				
 						
-			$id = $api->save_request($answer, 'CAPCHA_NOT_READY', 'data:image/jpg;base64,' . $captcha, 0, 0, $_user_key);
+			$id = $api->save_request($answer, 'CAPCHA_NOT_READY', to_base64($_captcha_file), 0, 0, $_user_key);
 			$api->set_request_status($id, 1);
 			
 			if ($_json == 1) {
@@ -187,31 +191,33 @@
 			}				
 		} else if (strtolower(trim($_method)) == 'userrecaptcha') {
 			$_id = hash("crc32b", "hUasr8345LKnrjh1" . time());
-			
+			$_enterprise = intval(trim($_REQUEST['enterprise'])) == 1 ? 1 : 0;
 			$_proxy = urldecode(trim($_REQUEST['proxy']));	
 			$_proxy_type = urldecode(trim($_REQUEST['proxy_type']));
+			$_minscore = empty($_REQUEST['min_score']) ? "" : $_REQUEST['min_score'];
 				
-			$url = 'http://api.captchas.io/reseller/recaptcha_task?key='.$key.'&user_key=' . $_user_key . '&version=' . trim($_version) . '&min_score=' . trim($_REQUEST['min_score']) . '&method=userrecaptcha&googlekey=' . trim($_REQUEST['googlekey']) . '&pageurl=' . urlencode(urldecode(trim($_REQUEST['pageurl'])));
+			$url = 'http://api.captchas.io/reseller/recaptcha_task?key='.$key.'&user_key=' . $_user_key . '&version=' . trim($_version) . '&min_score=' . trim($_minscore) . '&method=userrecaptcha&enterprise=' . $_enterprise . '&googlekey=' . trim($_REQUEST['googlekey']) . '&pageurl=' . $_REQUEST['pageurl'];
 			
 			$ch = curl_init();
 			curl_setopt($ch,CURLOPT_URL, 'http://api.captchas.io/reseller/recaptcha_task');
 			curl_setopt($ch,CURLOPT_HEADER, FALSE);
-			curl_setopt($ch,CURLOPT_POST, TRUE);
-			curl_setopt($ch,CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
+			curl_setopt($ch,CURLOPT_POST, TRUE);			
 			curl_setopt($ch, CURLOPT_USERAGENT,  "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1a2pre) Gecko/2008073000 Shredder/3.0a2pre ThunderBrowse/3.2.1.8");					
 			curl_setopt($ch,CURLOPT_POSTFIELDS, $postData);
 			curl_setopt($ch,CURLOPT_RETURNTRANSFER, TRUE);
 			curl_setopt($ch,CURLOPT_FOLLOWLOCATION, TRUE);			
 			curl_setopt($ch,CURLOPT_CONNECTTIMEOUT, 300);
 			curl_setopt($ch,CURLOPT_TIMEOUT, 300);
+			curl_setopt($ch, CURLOPT_TCP_NODELAY, TRUE);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, array(
-				'key' => $key,
+				'key' => $key,				'enterprise' => $_enterprise,
 				'user_key' => $_user_key,
 				'version' => $_version,
-				'min_score' => $_REQUEST['min_score'],
+				'min_score' => $_minscore,
 				'method' => 'userrecaptcha',
 				'googlekey' => $_REQUEST['googlekey'],
-				'pageurl' => urldecode($_REQUEST['pageurl']),
+				'pageurl' => $_REQUEST['pageurl'],
+				'enterprise' => $_enterprise
 			));			
 			$answer = curl_exec($ch);
 			curl_close($ch);
@@ -223,7 +229,7 @@
 			$data = json_encode(array('answer' => '', 'recaptcha' => 1, 'elapsed' => $elapsed, 'token' => $token, 'images' => array('base64' => NULL)));
 						
 			$id = $api->save_request($token, 'CAPCHA_NOT_READY', NULL, 0, 1, $_user_key);
-		
+							
 			if ($_json == 1) {
 				$return = array('status' => 1, 'request' => $id);
 				$json_return = json_encode($return);

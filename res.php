@@ -2,6 +2,10 @@
 	ini_set('display_errors', 1);
 	error_reporting(E_ERROR);	
 	
+	@header('Cache-Control: no-cache, no-store, must-revalidate');
+	@header('Pragma: no-cache');
+	@header('Expires: 0');	
+	
 	session_start();
 	ob_start();
 	
@@ -21,8 +25,11 @@
 		curl_setopt($ch, CURLOPT_HEADER, FALSE);					
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
-		curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 300);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 300);
+		curl_setopt($ch, CURLOPT_TCP_NODELAY, TRUE);
+		curl_setopt($ch, CURLOPT_USERAGENT,  "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1a2pre) Gecko/2008073000 Shredder/3.0a2pre ThunderBrowse/3.2.1.8");	
+		curl_setopt($ch, CURLOPT_TCP_NODELAY, TRUE);
 		$raw=curl_exec($ch);
 		curl_close($ch);		
 		
@@ -77,10 +84,9 @@
 		$recaptcha = $api->get_recaptcha_id($_REQUEST['id']);
 		
 		if ($recaptcha != 0) {
-			$url = 'http://api.captchas.io/reseller/recaptcha_result?key='.$key.'&user_key='.$_user_key.'&captcha_id=' . $_REQUEST['id'];
+			$url = 'https://api.captchas.io/reseller/recaptcha_result?key='.$key.'&captcha_id=' . $_REQUEST['id'];
 			//$answer = trim(get_result($url));		
-			$answer = trim(http_get($url));
-			
+			$answer = trim(http_get($url));			
 			$_rest = explode("|", $answer);	
 			$token = trim($_rest[2]);			
 			$elapsed = trim($_rest[1]);						
@@ -131,13 +137,13 @@
 				$displayed = $api->is_displayed($_REQUEST['id']);	
 				
 				if ($displayed == 0 && $error == 0) {
-					$user = http_get('http://api.captchas.io/reseller/get_user?key='.$key.'&user_key='.$_user_key);
+					$user = http_get('https://api.captchas.io/reseller/get_user?key='.$key.'&user_key='.$_user_key);
 					$user = json_decode($user, TRUE);
 					
 					$rate = $api->recaptcha_rate();
 					$credits = $user['credits'] - $rate;
 					
-					http_get('http://api.captchas.io/reseller/update_user?key='.$key.'&user_id='.$user['id'].'&credits='.$credits);
+					http_get('https://api.captchas.io/reseller/update_user?key='.$key.'&user_id='.$user['id'].'&credits='.$credits);
 				}
 				
 				$data = json_encode(array('recaptcha' => 1, 'answer' => $token, 'base64' => NULL, 'displayed' => 1));
@@ -146,7 +152,7 @@
 				$api->set_request_data($data, trim($_REQUEST['id']), 1);				
 			}				
 		} else {
-			$url = 'http://api.captchas.io/reseller/image_result?key='.$key.'&user_key='.$_user_key.'&captcha_id=' . $_REQUEST['id'];
+			$url = 'https://api.captchas.io/reseller/image_result?key='.$key.'&captcha_id=' . $_REQUEST['id'];
 			//$answer = trim(get_result($url));
 			$answer = trim(http_get($url));
 			
@@ -154,7 +160,7 @@
 			$token = trim($_rest[2]);			
 			$elapsed = trim($_rest[1]);	
 			$response = trim($_rest[0]);
-
+						
 			if ($answer == "CAPCHA_NOT_READY") {
 				$data = json_encode(array('recaptcha' => 0, 'answer' => 'CAPCHA_NOT_READY', 'base64' => $base64));
 				$api->set_request_data($data, trim($_REQUEST['id']), 0);			
@@ -201,13 +207,13 @@
 				$displayed = $api->is_displayed($_REQUEST['id']);
 
 				if ($displayed == 0 && $error == 0) {
-					$user = http_get('http://api.captchas.io/reseller/get_user?key='.$key.'&user_key='.$_user_key);
+					$user = http_get('https://api.captchas.io/reseller/get_user?key='.$key.'&user_key='.$_user_key);
 					$user = json_decode($user, TRUE);
 					
 					$rate = $api->image_rate();
 					$credits = $user['credits'] - $rate;
 					
-					http_get('http://api.captchas.io/reseller/update_user?key='.$key.'&user_id='.$user['id'].'&credits='.$credits);
+					http_get('https://api.captchas.io/reseller/update_user?key='.$key.'&user_id='.$user['id'].'&credits='.$credits);
 				}
 
 				$data = json_encode(array('recaptcha' => 0, 'answer' => $token, 'base64' => $base64, 'displayed' => 1));
@@ -217,7 +223,7 @@
 			}	
 		}
 	} else if (strtolower(trim($_REQUEST['action'])) == "getbalance") {
-		$user = http_get('http://api.captchas.io/reseller/get_user?key='.$key.'&user_key='.$_user_key);
+		$user = http_get('https://api.captchas.io/reseller/get_user?key='.$key.'&user_key='.$_user_key);
 		$user = json_decode($user, TRUE);
 		
 		$credits = $user['credits'];
@@ -233,16 +239,19 @@
 			print 'OK|'. $credits;	
 		}		
 	} else if (strtolower(trim($_REQUEST['action'])) == "userinfo") {
-		$user = http_get('http://api.captchas.io/reseller/get_user?key='.$key.'&user_key='.$_user_key);
+		$user = http_get('https://api.captchas.io/reseller/get_user?key='.$key.'&user_key='.$_user_key);
 		$user = json_decode($user, TRUE);
 		
-		$credits = $user['credits'];
+		if (!empty($user['email'])) {
+			$credits = $user['credits'];
 		
-		$return = array('email' => $user['email'], 'user_id' => 1, 'valute' => 'USD', 'balance' => $credits, 'key_type' => 'customer');
-		$json_return = json_encode($return);
-		
-		@header('Content-Type: application/json');
-		
-		print $json_return;
+			$return = array('email' => $user['email'], 'user_id' => 1, 'valute' => 'USD', 'balance' => $credits, 'key_type' => 'customer');
+			$json_return = json_encode($return);
+			
+			@header('Content-Type: application/json');		
+			print $json_return;			
+		} else {
+			print 'ERROR_API_KEY_NOT_FOUND';
+		}		
 	}
 ?>
