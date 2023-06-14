@@ -17,5 +17,6 @@ CREATE TABLE `requests` (
   `date` timestamp NOT NULL DEFAULT current_timestamp(),
   `displayed` int(11) NOT NULL DEFAULT 0,
   `recaptcha` int(11) NOT NULL DEFAULT 0,
+  `hcaptcha` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
