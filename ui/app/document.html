@@ -1,175 +1,1 @@
-<div class="main">
-  <div class="main-inner">
-    <div class="container">	  
-	  <div class="row">
-		<div class="span12">
-
-          <div class="widget">
-            <div class="widget-header"> <i class="icon-code"></i>
-              <h3>API Document</h3>
-            </div>
-            <!-- /widget-header -->
-            <div class="widget-content">
-				<p><h3 class="title" style="margin-bottom: 20px;">API KEY: <span style="font-weight: normal;"><?=$key?></span></h3></p>
-				<div>
-					<p><h4 style="margin-bottom: 10px;">Endpoint: <span style="font-weight: normal;"><?=$base?>in.php</span></h4></p>
-					<table border="1" cellpadding="10" cellspacing="2" style="width:100%;">
-						<tbody>
-							<tr>
-								<td style="background-color: #F0F0F0;" width="200"><strong>Paramaters</strong></td>
-								<td style="background-color: #F0F0F0;"><strong>Possible Values / Description</strong></td>
-							</tr>
-							<tr>
-								<td><strong>key</strong></td>
-								<td><code>api_key</code> - Your API key <?=$key?></td>
-												
-							</tr>
-							<tr>
-								<td><strong>method</strong></td>
-								<td>
-									<div><code>post</code> - defines that you're sending an image with multipart form</div>
-									<div style="margin-top: 15px;"><code>base64</code> - defines that you're sending a base64 encoded image</div>
-									<div style="margin-top: 15px;"><code>userrecaptcha</code> - defines that you're sending a Google reCAPTCHA request</div>
-								</td>
-							</tr>	
-							<tr>
-								<td><strong>file</strong></td>
-								<td>Used when you're sending a <code>post</code> API request...</td>
-							</tr>								
-							<tr>
-								<td><strong>body</strong></td>
-								<td>
-									Used when sending <code>base64</code> requests...
-								</td>
-							</tr>	
-							<tr>
-								<td><strong>googlekey</strong></td>
-								<td><code>data-sitekey</code> - The Google reCAPTCHA data-sitekey value. Used when in <code>userrecaptcha</code> mode.</td>
-							</tr>
-							<tr>
-								<td><strong>pageurl</strong></td>
-								<td><code>pageurl</code> - The Google reCAPTCHA page URL. Used when in <code>userrecaptcha</code> mode.</td>
-							</tr>		
-							<tr>
-								<td><strong>invisible</strong></td>
-								<td>
-									<div><code>0</code> - DEFAULT; normal reCAPTCHA type.</div>
-									<div style="margin-top: 15px;"><code>1</code> - means that reCAPTCHA is invisible type.</div>
-									<div style="margin-top: 15px;">Used when in <code>userrecaptcha</code> mode.</div>							
-								</td>
-							</tr>	
-							<tr>
-								<td><strong>min_score</strong></td>
-								<td>
-									<div>Used when you are solving reCAPTCHA v3 only. The score needed for resolution. Currently it's is only possible to get a response with min. score 0.5</div>
-									<div style="margin-top: 15px;"><code>0.5</code> - DEFAULT, <code>0.1</code> ... <code>0.3</code> ... <code>0.5</code> ... <code>0.9</code></div>				
-								</td>
-							</tr>								
-							<tr>
-								<td><strong>action</strong></td>
-								<td><code>verify</code> - Used when you are solving reCAPTCHA v3 only. The value of action parameter you found on page...</td>
-							</tr>								
-							<tr>
-								<td><strong>version</strong></td>
-								<td>
-									<div><code>v2</code> - DEFAULT; defines that you're sending a reCAPTCHA V2.</div>
-									<div style="margin-top: 15px;"><code>v3</code> - defines that you're sending a reCAPTCHA V3.</div>							
-									<div style="margin-top: 15px;">Used when in <code>userrecaptcha</code> mode.</div>
-								</td>
-							</tr>								
-							<tr>
-								<td><strong>json</strong></td>
-								<td>
-									<div><code>0</code> - server will send the response as plain text</div>
-									<div style="margin-top: 15px;"><code>1</code> - tells the server to send the response as JSON	</div>							
-								</td>
-							</tr>							
-						</tbody>
-					</table>
-
-					<p><h4 style="margin-top: 10px; margin-bottom: 10px;">Endpoint: <span style="font-weight: normal;"><?=$base?>res.php</span></h4></p>
-					<table border="1" cellpadding="10" cellspacing="2" style="width:100%;">
-						<tbody>
-							<tr>
-								<td style="background-color: #F0F0F0;" width="200"><strong>Paramaters</strong></td>
-								<td style="background-color: #F0F0F0;"><strong>Possible Values / Description</strong></td>
-							</tr>
-							<tr>
-								<td><strong>key</strong></td>
-								<td><code>api_key</code> - Your API key <?=$key?></td>
-												
-							</tr>
-							<tr>
-								<td><strong>action</strong></td>
-								<td>
-									<div><code>getbalance</code> — Get your account subscribed plan threads limit.</div>
-									<div style="margin-top: 15px;"><code>get</code> — Get answer for captcha.</div>
-								</td>
-							</tr>
-							<tr>
-								<td><strong>id</strong></td>
-								<td>The ID returned by the in.php endpoint. <code>ex: 12345678</code></td>
-							</tr>
-							<tr>
-								<td><strong>json<br></strong></td>
-								<td>
-									<div><code>0</code> - server will send the response as plain text</div>
-									<div style="margin-top: 15px;"><code>1</code> - tells the server to send the response as JSON</div>						
-								</td>
-							</tr>							
-						</tbody>
-					</table>
-				</div>
-				<div style="margin-top: 20px;">
-					<h4 style="margin-bottom: 10px;">Examples</h4>
-					<p>Send / Solve Request Example:</p>
-					<p><pre><code><?=$base?>in.php?key=<?=$key?>&method=userrecaptcha&googlekey=6Le85AAaAAAAAA6OYetdaV2nOlahkOZc03cjztcH&pageurl=https://captchas.io/recaptcha</code></pre></p>
-					<p>Receive Request Example:</p>
-					<p><pre><code><?=$base?>res.php?key=<?=$key?>&action=get&id=CAPTCHA_ID_FROM_ABOVE</code></pre></p>
-					<p>CAPTCHA image:</p>
-					<p>Normal Captcha is an image that contains distorted but human-readable text. To solve the captcha user have to type the text from the image.</p>
-					<p>To solve the captcha with our service you have to submit the image with HTTP POST request to our API URL: <?=$base?>in.php<br>
-					The server accepts images in multipart or base64 format.</p>
-					<p>Multipart sample form</p>
-					<p>
-<pre><code>&lt;form method="post" action="<?=$base?>in.php" enctype="multipart/form-data">
-&lt;input type="hidden" name="method" value="post">
-Your key:
-&lt;input type="text" name="key" value="<?=$key?>">
-The CAPTCHA file:
-&lt;input type="file" name="file">
-&lt;input type="submit" value="Upload and get the ID">
-&lt;/form></code></pre>
-					</p>
-					<p><?=$key?> is Your API key.</p>
-					<p>Base64 sample form</p>
-					<p>
-<pre><code>&lt;form method="post" action="<?=$base?>in.php">
-&lt;input type="hidden" name="method" value="base64">
-Your key:
-&lt;input type="text" name="key" value="<?=$key?>">
-The CAPTCHA file body in base64 format:
-&lt;textarea name="body">BASE64_FILE&lt;/textarea>
-&lt;input type="submit" value="Upload and get the ID">
-&lt;/form></code></pre>
-					</p>
-					<p>Make a 5 seconds timeout and submit a HTTP GET request to our API URL: <?=$base?>res.php providing the captcha ID. <br>
-					Request URL example:
-					</p>
-					<p><pre><code><?=$base?>res.php?key=<?=$key?>&action=get&id=CAPTCHA_ID_FROM_ABOVE</code></pre></p>
-					<p>If you have any issues using our service, don´t hesitate to contact our support via E-Mail [<a href="mailto:<?=$ADMINEMAIL?>"><?=$ADMINEMAIL?></a>] or via our [<a href="<?=$SUPPORT?>" target="_blank">HelpDesk Support Portal</a>].</p>
-				</div>
-            </div>
-            <!-- /widget-content --> 
-          </div>
-          <!-- /widget -->		
-		
-		</div>
-	  </div>
-	  <!-- /row --> 
-	  
-    </div>
-    <!-- /container --> 
-  </div>
-  <!-- /main-inner --> 
-</div>
+<div class="main">  <div class="main-inner">    <div class="container">	  	  <div class="row">		<div class="span12">          <div class="widget">            <div class="widget-header"> <i class="icon-code"></i>              <h3>API Document</h3>            </div>            <!-- /widget-header -->            <div class="widget-content">				<p><h3 class="title" style="margin-bottom: 20px;">API KEY: <span style="font-weight: normal;"><?=$key?></span></h3></p>				<div>					<p><h4 style="margin-bottom: 10px;">Endpoint: <span style="font-weight: normal;"><?=$base?>in.php</span></h4></p>					<table border="1" cellpadding="10" cellspacing="2" style="width:100%;">						<tbody>							<tr>								<td style="background-color: #F0F0F0;" width="200"><strong>Paramaters</strong></td>								<td style="background-color: #F0F0F0;"><strong>Possible Values / Description</strong></td>							</tr>							<tr>								<td><strong>key</strong></td>								<td><code>api_key</code> - Your API key <?=$key?></td>																			</tr>							<tr>								<td><strong>method</strong></td>								<td>									<div><code>post</code> - defines that you're sending an image with multipart form</div>									<div style="margin-top: 15px;"><code>base64</code> - defines that you're sending a base64 encoded image</div>									<div style="margin-top: 15px;"><code>userrecaptcha</code> - defines that you're sending a Google reCAPTCHA request</div>									<div style="margin-top: 15px;"><code>hcaptcha</code> - defines that you're sending a hCAPTCHA solve request</div>								</td>							</tr>								<tr>								<td><strong>file</strong></td>								<td>Used when you're sending a <code>post</code> API request...</td>							</tr>															<tr>								<td><strong>body</strong></td>								<td>									Used when sending <code>base64</code> requests...								</td>							</tr>								<tr>								<td><strong>googlekey</strong></td>								<td><code>data-sitekey</code> - The Google reCAPTCHA data-sitekey value. Used when in <code>userrecaptcha</code> mode.</td>							</tr>							<tr>								<td><strong>sitekey</strong></td>								<td><code>data-sitekey</code> - The hCAPTCHA data-sitekey value. Used when in <code>hcaptcha</code> mode.</td>							</tr>														<tr>								<td><strong>pageurl</strong></td>								<td><code>pageurl</code> - The Google reCAPTCHA page URL. Used when in <code>userrecaptcha</code> or <code>hcaptcha</code> mode.</td>							</tr>									<tr>								<td><strong>invisible</strong></td>								<td>									<div><code>0</code> - DEFAULT; normal reCAPTCHA type.</div>									<div style="margin-top: 15px;"><code>1</code> - means that reCAPTCHA is invisible type.</div>									<div style="margin-top: 15px;">Used when in <code>userrecaptcha</code> mode.</div>															</td>							</tr>								<tr>								<td><strong>min_score</strong></td>								<td>									<div>Used when you are solving reCAPTCHA v3 only. The score needed for resolution. Currently it's is only possible to get a response with min. score 0.5</div>									<div style="margin-top: 15px;"><code>0.5</code> - DEFAULT, <code>0.1</code> ... <code>0.3</code> ... <code>0.5</code> ... <code>0.9</code></div>												</td>							</tr>															<tr>								<td><strong>action</strong></td>								<td><code>verify</code> - Used when you are solving reCAPTCHA v3 only. The value of action parameter you found on page...</td>							</tr>															<tr>								<td><strong>version</strong></td>								<td>									<div><code>v2</code> - DEFAULT; defines that you're sending a reCAPTCHA V2.</div>									<div style="margin-top: 15px;"><code>v3</code> - defines that you're sending a reCAPTCHA V3.</div>																<div style="margin-top: 15px;">Used when in <code>userrecaptcha</code> mode.</div>								</td>							</tr>															<tr>								<td><strong>json</strong></td>								<td>									<div><code>0</code> - server will send the response as plain text</div>									<div style="margin-top: 15px;"><code>1</code> - tells the server to send the response as JSON	</div>															</td>							</tr>													</tbody>					</table>					<p><h4 style="margin-top: 10px; margin-bottom: 10px;">Endpoint: <span style="font-weight: normal;"><?=$base?>res.php</span></h4></p>					<table border="1" cellpadding="10" cellspacing="2" style="width:100%;">						<tbody>							<tr>								<td style="background-color: #F0F0F0;" width="200"><strong>Paramaters</strong></td>								<td style="background-color: #F0F0F0;"><strong>Possible Values / Description</strong></td>							</tr>							<tr>								<td><strong>key</strong></td>								<td><code>api_key</code> - Your API key <?=$key?></td>																			</tr>							<tr>								<td><strong>action</strong></td>								<td>									<div><code>getbalance</code> — Get your account subscribed plan threads limit.</div>									<div style="margin-top: 15px;"><code>get</code> — Get answer for captcha.</div>								</td>							</tr>							<tr>								<td><strong>id</strong></td>								<td>The ID returned by the in.php endpoint. <code>ex: 12345678</code></td>							</tr>							<tr>								<td><strong>json<br></strong></td>								<td>									<div><code>0</code> - server will send the response as plain text</div>									<div style="margin-top: 15px;"><code>1</code> - tells the server to send the response as JSON</div>														</td>							</tr>													</tbody>					</table>				</div>				<div style="margin-top: 20px;">					<h4 style="margin-bottom: 10px;">Examples</h4>					<p>Send / Solve Request Example:</p>					<p><pre><code><?=$base?>in.php?key=<?=$key?>&method=userrecaptcha&googlekey=6Le85AAaAAAAAA6OYetdaV2nOlahkOZc03cjztcH&pageurl=https://captchas.io/recaptcha</code></pre></p>					<p>Receive Request Example:</p>					<p><pre><code><?=$base?>res.php?key=<?=$key?>&action=get&id=CAPTCHA_ID_FROM_ABOVE</code></pre></p>					<p>CAPTCHA image:</p>					<p>Normal Captcha is an image that contains distorted but human-readable text. To solve the captcha user have to type the text from the image.</p>					<p>To solve the captcha with our service you have to submit the image with HTTP POST request to our API URL: <?=$base?>in.php<br>					The server accepts images in multipart or base64 format.</p>					<p>Multipart sample form</p>					<p><pre><code>&lt;form method="post" action="<?=$base?>in.php" enctype="multipart/form-data">&lt;input type="hidden" name="method" value="post">Your key:&lt;input type="text" name="key" value="<?=$key?>">The CAPTCHA file:&lt;input type="file" name="file">&lt;input type="submit" value="Upload and get the ID">&lt;/form></code></pre>					</p>					<p><?=$key?> is Your API key.</p>					<p>Base64 sample form</p>					<p><pre><code>&lt;form method="post" action="<?=$base?>in.php">&lt;input type="hidden" name="method" value="base64">Your key:&lt;input type="text" name="key" value="<?=$key?>">The CAPTCHA file body in base64 format:&lt;textarea name="body">BASE64_FILE&lt;/textarea>&lt;input type="submit" value="Upload and get the ID">&lt;/form></code></pre>					</p>					<p>Make a 5 seconds timeout and submit a HTTP GET request to our API URL: <?=$base?>res.php providing the captcha ID. <br>					Request URL example:					</p>					<p><pre><code><?=$base?>res.php?key=<?=$key?>&action=get&id=CAPTCHA_ID_FROM_ABOVE</code></pre></p>					<p>If you have any issues using our service, don´t hesitate to contact our support via E-Mail [<a href="mailto:<?=$ADMINEMAIL?>"><?=$ADMINEMAIL?></a>] or via our [<a href="<?=$SUPPORT?>" target="_blank">HelpDesk Support Portal</a>].</p>				</div>            </div>            <!-- /widget-content -->           </div>          <!-- /widget -->						</div>	  </div>	  <!-- /row --> 	      </div>    <!-- /container -->   </div>  <!-- /main-inner --> </div>
