@@ -44,6 +44,7 @@ $f3->set('SITENAME', $config['globals']['SITENAME']);
 $f3->set('ADMINEMAIL', $config['globals']['ADMINEMAIL']);
 $f3->set('SUPPORT', $config['globals']['SUPPORT']);
 $f3->set('RECAPTCHARATE', $config['globals']['RECAPTCHARATE']);
+$f3->set('HCAPTCHARATE', $config['globals']['HCAPTCHARATE']);
 $f3->set('IMAGERATE', $config['globals']['IMAGERATE']);
 $f3->set('AUDIORATE', $config['globals']['AUDIORATE']);
 
@@ -101,6 +102,7 @@ $f3->route('GET|POST /accounts',
 		
 		$f3->set('credits', $user['credits']);
 		$f3->set('recaptcha_rate', $f3->get('RECAPTCHARATE'));
+		$f3->set('hcaptcha_rate', $f3->get('HCAPTCHARATE'));
 		$f3->set('image_rate', $f3->get('IMAGERATE'));
 		$f3->set('audio_rate', $f3->get('AUDIORATE'));
 		

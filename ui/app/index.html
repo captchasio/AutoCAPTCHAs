@@ -1,169 +1,172 @@
-<div class="main">
-  <div class="main-inner">
-    <div class="container">
-      <div class="row">
-        <div class="span6">
-          <div class="widget widget-nopad">
-            <div class="widget-header"> <i class="icon-list-alt"></i>
-              <h3> Today's Stats</h3>
-            </div>
-            <!-- /widget-header -->
-            <div class="widget-content">
-              <div class="widget big-stats-container">
-                <div class="widget-content">
-                  <center><h3 class="bigstats"><i class="icon-key"></i>: <div style="display:inline-block;margin:0;padding:0;" id="resellerkey"><? echo $key; ?></div> <a data-clipboard-target="#resellerkey" class="btn1 integration-checklist__copy-button" data-title="Copied!"><img src="/ui/app/img/clippy.svg" width="15" id="copy"></a></h3></center>
-                  <div id="big_stats" class="cf">
-                    <div class="stat"> <i class="icon-google-plus"></i> <span class="value"><? echo $recaptchas; ?></span> </div>
-                    <!-- .stat -->
-                    
-                    <div class="stat"> <i class="icon-picture"></i> <span class="value"><? echo $images; ?></span> </div>
-                    <!-- .stat -->
-                    
-                    <div class="stat"> <i class="icon-headphones"></i> <span class="value"><? echo $audios; ?></span> </div>
-                    <!-- .stat -->
-                    
-                    <div class="stat"> <i class="icon-thumbs-up-alt"></i> <span class="value"><? echo $solves; ?></span> </div>
-                    <!-- .stat --> 
-                  </div>
-                </div>
-                <!-- /widget-content --> 
-                
-              </div>
-            </div>
-          </div>
-          <!-- /widget -->
-        </div>
-        <!-- /span6 -->
-        <div class="span6">
-          <div class="widget">
-            <div class="widget-header"> <i class="icon-dollar"></i>
-              <h3>Account Credits</h3>
-            </div>
-            <!-- /widget-header -->
-            <div class="widget-content">
-			<center>
-				<div style="margin-bottom:33px;">
-					<div style="display: inline-block;">
-						<h1 class="mb-0" style="font-size:50px;">
-							<sup style="font-weight: normal;">$</sup><span id="credits"><?=number_format($credits, 3)?></span>
-						</h1>
-					</div>
-					<div style="display: inline-block; padding-left: 15px; text-align: left;">
-					<?
-						$pcredits = $credits / $recaptcha_rate;
-						$pcredits = number_format($pcredits);
-						
-						$icredits = number_format($credits / $image_rate);
-						$acredits = number_format($credits / $audio_rate);
-						
-						print '<div><strong>' . $pcredits . '</strong> reCAPTCHAs</div>';
-						print '<div><strong>' . $icredits . '</strong> Images</div>';
-						print '<div><strong>' . $acredits . '</strong> Audios</div>';
-					?>
-					</div>
-				</div>			
-			</center>
-            <div class="shortcuts"> 
-				<a href="javascript:;" class="shortcut" data-toggle="modal" data-target="#mega-modal"><i class="shortcut-icon icon-plus-sign"></i><span class="shortcut-label">Top-up</span></a>
-				<a href="javascript:location.reload(true);" class="shortcut"><i class="shortcut-icon icon-refresh"></i><span class="shortcut-label">Refresh</span></a>
-				<a href="/accounts/orders" class="shortcut"><i class="shortcut-icon icon-credit-card"></i><span class="shortcut-label">Orders</span></a>
-			</div>
-              <!-- /shortcuts --> 
-            </div>
-            <!-- /widget-content --> 
-          </div>
-          <!-- /widget -->
-        </div>
-        <!-- /span6 --> 
-      </div>
-      <!-- /row --> 
-	  
-	  <div class="row">
-		<div class="span12">
-
-          <div class="widget">
-            <div class="widget-header"> <i class="icon-terminal"></i>
-              <h3>Daily Activity</h3>
-            </div>
-            <!-- /widget-header -->
-            <div class="widget-content">
-				<table class="table table-striped with-check">
-				  <thead>
-					<tr>
-					  <th width="200" style="width: 100px;">DATE</th>	
-					  <th>CAPTCHA</th>  
-					  <th>TYPE</th>
-					  <th>ANSWER</th>
-					</tr>
-				  </thead>
-				  <tbody>	
-					<?			
-						foreach ($activities as $activity) {
-							if ($activity['captcha_type'] == 'image') {
-								print '
-									<tr>
-										<td style="vertical-align: middle; background-color: #FFFFFF;"><div style="font-size: 16px; text-align: center; color: #999999;"><b>' . date('M', strtotime($activity['date'])) . '</b><br>' . date('j', strtotime($activity['date'])) . '</div></td>
-										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><img src="' . $activity['base64'] . '"></td>
-										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><b>' . $activity['captcha_type'] . '</b></td>
-										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><b>' . $activity['answer'] . '</b></td>
-									</tr>
-								';	
-							} else if ($activity['captcha_type'] == 'recaptcha') {
-								print '
-									<tr>
-										<td style="vertical-align: middle; background-color: #FFFFFF;"><div style="font-size: 16px; text-align: center; color: #999999;"><b>' . date('M', strtotime($activity['date'])) . '</b><br>' . date('j', strtotime($activity['date'])) . '</div></td>
-										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;">' . substr($activity['captcha'], 0, 20) . '...</td>
-										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><b>' . $activity['captcha_type'] . '</b></td>
-										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><div style="overflow: none; overflow-wrap: break-word; word-wrap: break-word; padding: 5px;">' . substr($activity['answer'], 0, 50) . '...</div></td>
-									</tr>
-								';								
-							}
-						}
-					?>
-				  </tbody>
-				</table>
-            </div>
-            <!-- /widget-content --> 
-          </div>
-          <!-- /widget -->		
-		
-		</div>
-	  </div>
-	  <!-- /row --> 
-	  
-    </div>
-    <!-- /container --> 
-  </div>
-  <!-- /main-inner --> 
-</div>
-
-<div id="mega-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mega-modalLabel" aria-hidden="true" style="display:none;">
-	<div class="modal-header">
-		<div style="float: right; padding-bottom: 20px;"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><b aria-hidden="true">&times;</b></button></div>
-		<h4 class="modal-title mt-0" id="mega-modalLabel">Credit Top-up</h4>
-	</div>
-	<div class="modal-body">
-		<center>
-			<form role="form" method="POST" action="/buy" target="_blank">
-				<div>CHOOSE THE AMOUNT TO TOP-UP...</div>
-				<select name="amount" id="amount" style="font-size: 15px; font-weight: bold; line-height: 20px;">
-					<option value="5">5 USD</option>
-					<option value="15">15 USD</option>
-					<option value="50">50 USD</option>
-					<option value="100">100 USD</option>
-					<option value="200">200 USD</option>
-					<option value="250">250 USD</option>
-					<option value="300">300 USD</option>
-					<option value="500">500 USD</option>
-					<option value="550">550 USD</option>
-					<option value="600">600 USD</option>
-					<option value="650">650 USD</option>
-					<option value="900">900 USD</option>
-					<option value="950">950 USD</option>
-					<option value="1000">1000 USD</option>
-				</select>
-				<div style="margin-top: 10px;"><button class="btn btn-lg btn-primary btn-block" type="submit" name="q" value="payment" style="width: 200px;">Top-UP</button></div>
-			</form>
-		</center>
-	</div>
+<div class="main">
+  <div class="main-inner">
+    <div class="container">
+      <div class="row">
+        <div class="span6">
+          <div class="widget widget-nopad">
+            <div class="widget-header"> <i class="icon-list-alt"></i>
+              <h3> Today's Stats</h3>
+            </div>
+            <!-- /widget-header -->
+            <div class="widget-content">
+              <div class="widget big-stats-container">
+                <div class="widget-content">
+                  <center><h3 class="bigstats"><i class="icon-key"></i>: <div style="display:inline-block;margin:0;padding:0;" id="resellerkey"><? echo $key; ?></div> <a data-clipboard-target="#resellerkey" class="btn1 integration-checklist__copy-button" data-title="Copied!"><img src="/ui/app/img/clippy.svg" width="15" id="copy"></a></h3></center>
+                  <div id="big_stats" class="cf">
+                    <div class="stat"> <i class="icon-google-plus"></i> <span class="value"><? echo $recaptchas; ?></span> </div>
+                    <!-- .stat -->
+                    
+                    <div class="stat"> <i class="icon-picture"></i> <span class="value"><? echo $images; ?></span> </div>
+                    <!-- .stat -->
+                    
+                    <div class="stat"> <i class="icon-headphones"></i> <span class="value"><? echo $audios; ?></span> </div>
+                    <!-- .stat -->
+                    
+                    <div class="stat"> <i class="icon-thumbs-up-alt"></i> <span class="value"><? echo $solves; ?></span> </div>
+                    <!-- .stat --> 
+                  </div>
+                </div>
+                <!-- /widget-content --> 
+                
+              </div>
+            </div>
+          </div>
+          <!-- /widget -->
+        </div>
+        <!-- /span6 -->
+        <div class="span6">
+          <div class="widget">
+            <div class="widget-header"> <i class="icon-dollar"></i>
+              <h3>Account Credits</h3>
+            </div>
+            <!-- /widget-header -->
+            <div class="widget-content">
+			<center>
+				<div style="margin-bottom:33px;">
+					<div style="display: inline-block;">
+						<h1 class="mb-0" style="font-size:50px;">
+							<sup style="font-weight: normal;">$</sup><span id="credits"><?=number_format($credits, 3)?></span>
+						</h1>
+					</div>
+					<div style="display: inline-block; padding-left: 15px; text-align: left;">
+					<?
+						$pcredits = $credits / $recaptcha_rate;
+						$pcredits = number_format($pcredits);
+						
+						$icredits = number_format($credits / $image_rate);
+						$acredits = number_format($credits / $audio_rate);
+						
+						$hcredits = $credits / $hcaptcha_rate;
+						$hcredits = number_format($hcredits);
+						
+						print '<div><strong>' . $pcredits . '</strong> reCAPTCHAs</div>';
+						print '<div><strong>' . $hcredits . '</strong> hCAPTCHAs</div>';
+						print '<div><strong>' . $icredits . '</strong> Images</div>';
+					?>
+					</div>
+				</div>			
+			</center>
+            <div class="shortcuts"> 
+				<a href="javascript:;" class="shortcut" data-toggle="modal" data-target="#mega-modal"><i class="shortcut-icon icon-plus-sign"></i><span class="shortcut-label">Top-up</span></a>
+				<a href="javascript:location.reload(true);" class="shortcut"><i class="shortcut-icon icon-refresh"></i><span class="shortcut-label">Refresh</span></a>
+				<a href="/accounts/orders" class="shortcut"><i class="shortcut-icon icon-credit-card"></i><span class="shortcut-label">Orders</span></a>
+			</div>
+              <!-- /shortcuts --> 
+            </div>
+            <!-- /widget-content --> 
+          </div>
+          <!-- /widget -->
+        </div>
+        <!-- /span6 --> 
+      </div>
+      <!-- /row --> 
+	  
+	  <div class="row">
+		<div class="span12">
+
+          <div class="widget">
+            <div class="widget-header"> <i class="icon-terminal"></i>
+              <h3>Daily Activity</h3>
+            </div>
+            <!-- /widget-header -->
+            <div class="widget-content">
+				<table class="table table-striped with-check">
+				  <thead>
+					<tr>
+					  <th width="200" style="width: 100px;">DATE</th>	
+					  <th>CAPTCHA</th>  
+					  <th>TYPE</th>
+					  <th>ANSWER</th>
+					</tr>
+				  </thead>
+				  <tbody>	
+					<?			
+						foreach ($activities as $activity) {
+							if ($activity['captcha_type'] == 'image') {
+								print '
+									<tr>
+										<td style="vertical-align: middle; background-color: #FFFFFF;"><div style="font-size: 16px; text-align: center; color: #999999;"><b>' . date('M', strtotime($activity['date'])) . '</b><br>' . date('j', strtotime($activity['date'])) . '</div></td>
+										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><img src="' . $activity['base64'] . '"></td>
+										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><b>' . $activity['captcha_type'] . '</b></td>
+										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><b>' . $activity['answer'] . '</b></td>
+									</tr>
+								';	
+							} else if ($activity['captcha_type'] == 'recaptcha') {
+								print '
+									<tr>
+										<td style="vertical-align: middle; background-color: #FFFFFF;"><div style="font-size: 16px; text-align: center; color: #999999;"><b>' . date('M', strtotime($activity['date'])) . '</b><br>' . date('j', strtotime($activity['date'])) . '</div></td>
+										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;">' . substr($activity['captcha'], 0, 20) . '...</td>
+										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><b>' . $activity['captcha_type'] . '</b></td>
+										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><div style="overflow: none; overflow-wrap: break-word; word-wrap: break-word; padding: 5px;">' . substr($activity['answer'], 0, 50) . '...</div></td>
+									</tr>
+								';								
+							}
+						}
+					?>
+				  </tbody>
+				</table>
+            </div>
+            <!-- /widget-content --> 
+          </div>
+          <!-- /widget -->		
+		
+		</div>
+	  </div>
+	  <!-- /row --> 
+	  
+    </div>
+    <!-- /container --> 
+  </div>
+  <!-- /main-inner --> 
+</div>
+
+<div id="mega-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mega-modalLabel" aria-hidden="true" style="display:none;">
+	<div class="modal-header">
+		<div style="float: right; padding-bottom: 20px;"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><b aria-hidden="true">&times;</b></button></div>
+		<h4 class="modal-title mt-0" id="mega-modalLabel">Credit Top-up</h4>
+	</div>
+	<div class="modal-body">
+		<center>
+			<form role="form" method="POST" action="/buy" target="_blank">
+				<div>CHOOSE THE AMOUNT TO TOP-UP...</div>
+				<select name="amount" id="amount" style="font-size: 15px; font-weight: bold; line-height: 20px;">
+					<option value="5">5 USD</option>
+					<option value="15">15 USD</option>
+					<option value="50">50 USD</option>
+					<option value="100">100 USD</option>
+					<option value="200">200 USD</option>
+					<option value="250">250 USD</option>
+					<option value="300">300 USD</option>
+					<option value="500">500 USD</option>
+					<option value="550">550 USD</option>
+					<option value="600">600 USD</option>
+					<option value="650">650 USD</option>
+					<option value="900">900 USD</option>
+					<option value="950">950 USD</option>
+					<option value="1000">1000 USD</option>
+				</select>
+				<div style="margin-top: 10px;"><button class="btn btn-lg btn-primary btn-block" type="submit" name="q" value="payment" style="width: 200px;">Top-UP</button></div>
+			</form>
+		</center>
+	</div>
 </div><!-- /.modal -->
