@@ -126,7 +126,7 @@
 			$answer = $raw[2];
 			$elapsed = $raw[1];	
 						
-			$id = $api->save_request($answer, 'CAPCHA_NOT_READY', to_base64($_captcha_file), 0, 0, $_user_key);
+			$id = $api->save_request($answer, 'CAPCHA_NOT_READY', to_base64($_captcha_file), 0, 0, 0, $_user_key);
 			$api->set_request_status($id, 1);
 			
 			if ($_json == 1) {
@@ -178,7 +178,7 @@
 			$answer = $raw[2];
 			$elapsed = $raw[1];				
 						
-			$id = $api->save_request($answer, 'CAPCHA_NOT_READY', to_base64($_captcha_file), 0, 0, $_user_key);
+			$id = $api->save_request($answer, 'CAPCHA_NOT_READY', to_base64($_captcha_file), 0, 0, 0, $_user_key);
 			$api->set_request_status($id, 1);
 			
 			if ($_json == 1) {
@@ -228,7 +228,49 @@
 					
 			$data = json_encode(array('answer' => '', 'recaptcha' => 1, 'elapsed' => $elapsed, 'token' => $token, 'images' => array('base64' => NULL)));
 						
-			$id = $api->save_request($token, 'CAPCHA_NOT_READY', NULL, 0, 1, $_user_key);
+			$id = $api->save_request($token, 'CAPCHA_NOT_READY', NULL, 0, 1, 0, $_user_key);
+							
+			if ($_json == 1) {
+				$return = array('status' => 1, 'request' => $id);
+				$json_return = json_encode($return);
+				header('Content-Type: application/json');
+				print $json_return;
+			} else {
+				print 'OK|'. $id;	
+			}																					
+		} else if (strtolower(trim($_method)) == 'hcaptcha') {
+			$_id = hash("crc32b", "hUasr8345LKnrjh1" . time());
+			$_enterprise = intval(trim($_REQUEST['enterprise'])) == 1 ? 1 : 0;
+			$_proxy = urldecode(trim($_REQUEST['proxy']));	
+			$_proxy_type = urldecode(trim($_REQUEST['proxy_type']));						
+			
+			$ch = curl_init();
+			curl_setopt($ch,CURLOPT_URL, 'http://api.captchas.io/reseller/hcaptcha_task');
+			curl_setopt($ch,CURLOPT_HEADER, FALSE);
+			curl_setopt($ch,CURLOPT_POST, TRUE);			
+			curl_setopt($ch, CURLOPT_USERAGENT,  "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1a2pre) Gecko/2008073000 Shredder/3.0a2pre ThunderBrowse/3.2.1.8");					
+			curl_setopt($ch,CURLOPT_POSTFIELDS, $postData);
+			curl_setopt($ch,CURLOPT_RETURNTRANSFER, TRUE);
+			curl_setopt($ch,CURLOPT_FOLLOWLOCATION, TRUE);			
+			curl_setopt($ch,CURLOPT_CONNECTTIMEOUT, 300);
+			curl_setopt($ch,CURLOPT_TIMEOUT, 300);
+			curl_setopt($ch, CURLOPT_TCP_NODELAY, TRUE);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, array(
+				'key' => $key,
+				'user_key' => $_user_key,
+				'sitekey' => $_REQUEST['sitekey'],
+				'pageurl' => $_REQUEST['pageurl']
+			));			
+			$answer = curl_exec($ch);
+			curl_close($ch);
+
+			$_rest = explode("|", $answer);	
+			$token = trim($_rest[2]);
+			$elapsed = $_rest[1];
+					
+			$data = json_encode(array('answer' => '', 'hcaptcha' => 1, 'elapsed' => $elapsed, 'token' => $token, 'images' => array('base64' => NULL)));
+						
+			$id = $api->save_request($token, 'CAPCHA_NOT_READY', NULL, 0, 0, 1, $_user_key);
 							
 			if ($_json == 1) {
 				$return = array('status' => 1, 'request' => $id);

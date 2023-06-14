@@ -24,6 +24,10 @@ class API {
 	function recaptcha_rate() {
 		return $this->ini["RECAPTCHARATE"];
 	}
+	
+	function hcaptcha_rate() {
+		return $this->ini["HCAPTCHARATE"];
+	}	
 
 	function image_rate() {
 		return $this->ini["IMAGERATE"];
@@ -33,12 +37,12 @@ class API {
 		return $this->ini["AUDIORATE"];
 	}
 	
-	function save_request($id, $answer, $base64, $status, $recaptcha, $key) {		
+	function save_request($id, $answer, $base64, $status, $recaptcha, $hcaptcha, $key) {		
 		$content = json_encode(array('answer' => $answer, 'base64' => $base64, 'recaptcha' => $recaptcha, 'status' => $status));
 		
 		$recaptcha = empty($recaptcha) ? 0 : $recaptcha;
 		
-		$this->db->query("REPLACE INTO `requests`(`id`, `key`, `base64`, `answer`, `status`, `recaptcha`) VALUES ('" . $id . "', '" . $key . "', '" . $base64 . "', '" . $answer . "', " . $status . ", " . $recaptcha . ")");	
+		$this->db->query("REPLACE INTO `requests`(`id`, `key`, `base64`, `answer`, `status`, `recaptcha`, `hcaptcha`) VALUES ('" . $id . "', '" . $key . "', '" . $base64 . "', '" . $answer . "', " . $status . ", " . $recaptcha . ", " . $hcaptcha . ")");	
 		
 		return $id;
 	}	
@@ -59,6 +63,7 @@ class API {
 									`base64` = '" . $data['base64'] . "',
 									`answer` = '" . $data['answer'] . "',
 									`recaptcha` = '" . $data['recaptcha'] . "',
+									`hcaptcha` = '" . $data['hcaptcha'] . "',
 									`displayed` = " . $displayed . " 
 									WHERE `id` = '" . $id . "'");
 		
@@ -108,6 +113,17 @@ class API {
 			//$data = $result->fetchArray();
 			
 			return $result['recaptcha'];
+		} else {
+			return NULL;
+		}
+	}	
+	
+	function get_hcaptcha_id($id) {
+		if ($id) {
+			$result = $this->db->squery("SELECT `hcaptcha` FROM `requests` WHERE `id` = '" . $id . "'");
+			//$data = $result->fetchArray();
+			
+			return $result['hcaptcha'];
 		} else {
 			return NULL;
 		}
