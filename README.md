@@ -46,6 +46,6 @@ Become a Reseller now! [https://app.captchas.io/reseller/onboard/#pricing]
 
 -----
 
-<a href="https://www.buymeacoffee.com/indite"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=indite&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"></a>
+Become a Patron: <a href="https://patreon.com/user?u=95097899&utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator&utm_content=join_link">https://patreon.com/user?u=95097899</a>
 
 Copyright &copy; 2021 by <a href="https://captchas.io/" target="_blank">https://captchas.io/</a> all rights reserved world-wide.
