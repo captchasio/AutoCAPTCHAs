@@ -1,72 +1,72 @@
-<div class="main">
-  <div class="main-inner">
-    <div class="container">	  
-	  <div class="row">
-		<div class="span12">
-
-          <div class="widget">
-            <div class="widget-header"> <i class="icon-desktop"></i>
-              <h3>Solves History</h3>
-            </div>
-            <!-- /widget-header -->
-            <div class="widget-content">
-				<table id="datatable" class="table table-stripe table-hover data-table" cellspacing="10" cellpadding="5">
-				  <thead>
-					<tr>
-					  <th width="200" style="width: 100px;">DATE</th>	
-					  <th>CAPTCHA</th>  
-					  <th>TYPE</th>
-					  <th>ANSWER</th>
-					</tr>
-				  </thead>
-				  <!--
-				  <tbody>
-					<repeat group="{{ @solves_t }}" value="{{ @item }}">
-						<tr>
-							<td>{{ @item.id  }}</td>
-							<td><img src="{{ @item.base64  }}"></td>
-							<td><div style="overflow: none; overflow-wrap: break-word; word-wrap: break-word; padding: 5px; width: 39%;">{{ @item.answer  }}</div></td>
-						</tr>
-					</repeat>				  
-				  </tbody>
-				  -->
-				  <tbody>	
-					<?			
-						foreach ($activities as $activity) {
-							if ($activity['captcha_type'] == 'image') {
-								print '
-									<tr>
-										<td style="vertical-align: middle; background-color: #FFFFFF;"><div style="font-size: 16px; text-align: center; color: #999999;"><b>' . date('M', strtotime($activity['date'])) . '</b><br>' . date('j', strtotime($activity['date'])) . '</div></td>
-										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><img src="' . $activity['base64'] . '"></td>
-										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><b>' . $activity['captcha_type'] . '</b></td>
-										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><b>' . $activity['answer'] . '</b></td>
-									</tr>
-								';	
-							} else if ($activity['captcha_type'] == 'recaptcha') {
-								print '
-									<tr>
-										<td style="vertical-align: middle; background-color: #FFFFFF;"><div style="font-size: 16px; text-align: center; color: #999999;"><b>' . date('M', strtotime($activity['date'])) . '</b><br>' . date('j', strtotime($activity['date'])) . '</div></td>
-										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;">' . substr($activity['captcha'], 0, 20) . '...</td>
-										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><b>' . $activity['captcha_type'] . '</b></td>
-										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><div style="overflow: none; overflow-wrap: break-word; word-wrap: break-word; padding: 5px;">' . substr($activity['answer'], 0, 50) . '...</div></td>
-									</tr>
-								';								
-							} else if ($activity['captcha_type'] == 'hcaptcha') {								print '									<tr>										<td style="vertical-align: middle; background-color: #FFFFFF;"><div style="font-size: 16px; text-align: center; color: #999999;"><b>' . date('M', strtotime($activity['date'])) . '</b><br>' . date('j', strtotime($activity['date'])) . '</div></td>										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;">' . substr($activity['captcha'], 0, 20) . '...</td>										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><b>' . $activity['captcha_type'] . '</b></td>										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><div style="overflow: none; overflow-wrap: break-word; word-wrap: break-word; padding: 5px;">' . substr($activity['answer'], 0, 50) . '...</div></td>									</tr>								';															}
-						}
-					?>
-				  </tbody>				  
-				</table>			  
-            </div>
-            <!-- /widget-content --> 
-          </div>
-          <!-- /widget -->		
-		
-		</div>
-	  </div>
-	  <!-- /row --> 
-	  
-    </div>
-    <!-- /container --> 
-  </div>
-  <!-- /main-inner --> 
+<div class="main">
+  <div class="main-inner">
+    <div class="container">	  
+	  <div class="row">
+		<div class="span12">
+
+          <div class="widget">
+            <div class="widget-header"> <i class="icon-desktop"></i>
+              <h3>Solves History</h3>
+            </div>
+            <!-- /widget-header -->
+            <div class="widget-content">
+				<table id="datatable" class="table table-stripe table-hover data-table" cellspacing="10" cellpadding="5">
+				  <thead>
+					<tr>
+					  <th width="200" style="width: 100px;">DATE</th>	
+					  <th>CAPTCHA</th>  
+					  <th>TYPE</th>
+					  <th>ANSWER</th>
+					</tr>
+				  </thead>
+				  <!--
+				  <tbody>
+					<repeat group="{{ @solves_t }}" value="{{ @item }}">
+						<tr>
+							<td>{{ @item.id  }}</td>
+							<td><img src="{{ @item.base64  }}"></td>
+							<td><div style="overflow: none; overflow-wrap: break-word; word-wrap: break-word; padding: 5px; width: 39%;">{{ @item.answer  }}</div></td>
+						</tr>
+					</repeat>				  
+				  </tbody>
+				  -->
+				  <tbody>	
+					<?			
+						foreach ($activities as $activity) {
+							if ($activity['captcha_type'] == 'image') {
+								print '
+									<tr>
+										<td style="vertical-align: middle; background-color: #FFFFFF;"><div style="font-size: 16px; text-align: center; color: #999999;"><b>' . date('M', strtotime($activity['date'])) . '</b><br>' . date('j', strtotime($activity['date'])) . '</div></td>
+										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><img src="' . $activity['base64'] . '"></td>
+										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><b>' . $activity['captcha_type'] . '</b></td>
+										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><b>' . $activity['answer'] . '</b></td>
+									</tr>
+								';	
+							} else if ($activity['captcha_type'] == 'recaptcha') {
+								print '
+									<tr>
+										<td style="vertical-align: middle; background-color: #FFFFFF;"><div style="font-size: 16px; text-align: center; color: #999999;"><b>' . date('M', strtotime($activity['date'])) . '</b><br>' . date('j', strtotime($activity['date'])) . '</div></td>
+										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;">' . substr($activity['captcha'], 0, 20) . '...</td>
+										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><b>' . $activity['captcha_type'] . '</b></td>
+										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><div style="overflow: none; overflow-wrap: break-word; word-wrap: break-word; padding: 5px;">' . substr($activity['answer'], 0, 50) . '...</div></td>
+									</tr>
+								';								
+							} else if ($activity['captcha_type'] == 'hcaptcha') {								print '									<tr>										<td style="vertical-align: middle; background-color: #FFFFFF;"><div style="font-size: 16px; text-align: center; color: #999999;"><b>' . date('M', strtotime($activity['date'])) . '</b><br>' . date('j', strtotime($activity['date'])) . '</div></td>										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;">' . substr($activity['captcha'], 0, 20) . '...</td>										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><b>' . $activity['captcha_type'] . '</b></td>										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><div style="overflow: none; overflow-wrap: break-word; word-wrap: break-word; padding: 5px;">' . substr($activity['answer'], 0, 50) . '...</div></td>									</tr>								';															}
+						}
+					?>
+				  </tbody>				  
+				</table>			  
+            </div>
+            <!-- /widget-content --> 
+          </div>
+          <!-- /widget -->		
+		
+		</div>
+	  </div>
+	  <!-- /row --> 
+	  
+    </div>
+    <!-- /container --> 
+  </div>
+  <!-- /main-inner --> 
 </div>

@@ -1,30 +1,17 @@
-# Enable rewrite engine and route requests to framework
 RewriteEngine On
-
-# Some servers require you to specify the `RewriteBase` directive
-# In such cases, it should be the path (relative to the document root)
-# containing this .htaccess file
-#
 RewriteBase /
 
 RewriteRule ^lib/(tmp|api|data|config)\/|\.ini$ - [R=404]
 
-RewriteCond %{HTTPS} Off [NC]
-RewriteCond %{HTTP_HOST} ^captchacoins.com$
-RewriteRule ^(.*)$ https://captchacoins.com/$1 [R=301,L]
+#RewriteCond %{HTTPS} Off [NC]
+#RewriteCond %{HTTP_HOST} ^captchacoins.com$
+#RewriteRule ^(.*)$ https://captchacoins.com/$1 [R=301,L]
 
-RewriteCond %{HTTP_HOST} ^www.captchacoins.com$
-RewriteRule ^(.*)$ https://captchacoins.com/$1 [R=301,L]
+#RewriteCond %{HTTP_HOST} ^www.captchacoins.com$
+#RewriteRule ^(.*)$ https://captchacoins.com/$1 [R=301,L]
 
-#RewriteCond %{REQUEST_FILENAME} !-l
+RewriteCond %{REQUEST_FILENAME} !-l
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule .* index.php [L]
-#RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
-
-# php -- BEGIN cPanel-generated handler, do not edit
-# Set the “ea-php74” package as the default “PHP” programming language.
-<IfModule mime_module>
-  AddHandler application/x-httpd-ea-php74 .php .php7 .phtml
-</IfModule>
-# php -- END cPanel-generated handler, do not edit
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]

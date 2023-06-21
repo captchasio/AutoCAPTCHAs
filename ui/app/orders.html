@@ -19,6 +19,7 @@
 					  <th style="text-align: center;">STATUS</th>
 					  <th style="text-align: center;">METHOD</th>
 					  <th style="text-align: center;">DATE</th>
+					  <th style="text-align: center;">ACTION</th>
 					</tr>
 				  </thead>
 				  <tbody>	
@@ -26,20 +27,33 @@
 						foreach ($orders as $order) {
 							if ($order['status'] == 'unpaid') {
 								$order['status'] = '<div style="color:#FF0000;">' . strtoupper($order['status']) . '</div>';
+
+								print '
+									<tr>
+										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><b>' . $order['id'] . '</b></td>
+										<td style="font-size: 16px; vertical-align: middle; text-align: right; padding-right: 20px; background-color: #F8F8F8;">' . number_format($order['price'], 2) . '</td>
+										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;">' . $order['currency'] . '</td>
+										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><b>' . $order['status'] . '</b></td>
+										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;">' . $order['payment_method'] . '</td>
+										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;">' . $order['date'] . '</td>
+										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><a href="https://pay.captchas.io/resellers/orders/' . $order['id'] . '" target="_blank" class="btn btn-sm">PAY</a></td>
+									</tr>
+								';									
 							} else {
 								$order['status'] = '<div style="color:#0000FF;">' . strtoupper($order['status']) . '</div>';
-							}
-							
-							print '
-								<tr>
-									<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><b>' . $order['id'] . '</b></td>
-									<td style="font-size: 16px; vertical-align: middle; text-align: right; padding-right: 20px; background-color: #F8F8F8;">' . number_format($order['price'], 2) . '</td>
-									<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;">' . $order['currency'] . '</td>
-									<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><b>' . $order['status'] . '</b></td>
-									<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;">' . $order['payment_method'] . '</td>
-									<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;">' . $order['date'] . '</td>
-								</tr>
-							';
+								
+								print '
+									<tr>
+										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><b>' . $order['id'] . '</b></td>
+										<td style="font-size: 16px; vertical-align: middle; text-align: right; padding-right: 20px; background-color: #F8F8F8;">' . number_format($order['price'], 2) . '</td>
+										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;">' . $order['currency'] . '</td>
+										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><b>' . $order['status'] . '</b></td>
+										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;">' . $order['payment_method'] . '</td>
+										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;">' . $order['date'] . '</td>
+										<td style="font-size: 16px; vertical-align: middle; text-align: left; padding-right: 20px; background-color: #F8F8F8;"><a class="btn btn-sm" disabled readonly>PAY</a></td>
+									</tr>
+								';								
+							}							
 						}
 					?>
 				  </tbody>				  

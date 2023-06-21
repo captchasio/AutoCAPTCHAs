@@ -66,6 +66,12 @@ $f3->route('GET|POST /',
 	}
 );
 
+$f3->route('GET|POST /privacypolicy',
+	function($f3) {
+		echo View::instance()->render('privacypolicy.html');
+	}
+);
+
 $f3->route('GET /download',
 	function($f3) {
 		$f3->reroute('https://github.com/captchasio/AutoCAPTCHAs/releases');
@@ -134,6 +140,7 @@ $f3->route('GET|POST /accounts/solves',
 		$f3->set('accounts', '');
 		$f3->set('document', '');
 		$f3->set('profile', '');
+		$f3->set('orders', '');
 		$f3->set('solves', 'active');
 		
 		if (!$authenticated) {
@@ -162,17 +169,19 @@ $f3->route('GET|POST /accounts/solves',
 
 $f3->route('GET|POST /accounts/orders',
 	function($f3) {
+		$f3->set('orders_active', 'active');
+		
 		$session = $f3->get('SESSION');
 		$authenticated = $session['authenticated'] ? TRUE : FALSE;
 		$profile = unserialize($session['profile']);
 		
 		$reseller_key = $f3->get('APIKEY');
-		$user_key = $profile['key'];
+		$user_key = $profile['key'];	
 		
 		if (!$authenticated) {
 			$f3->reroute($f3->get('BASEURL') . '/accounts/login');
-		}
-	
+		}			
+		
 		$curl = new Curl();
 		
 		$response = $curl->get('https://api.captchas.io/reseller/user_orders?key=' . $reseller_key . '&user_key=' . $user_key);
@@ -362,8 +371,20 @@ $f3->route('GET|POST /accounts/register',
 				'ip' => $ip
 			);
 			
-			$response = $curl->post('https://api.captchas.io/reseller/register_user', $data);
+			$response = $curl->post('https://api.captchas.io/reseller/register_user', $data);						
 			$profile = json_decode($response, TRUE);			
+			
+			$data = array(
+				'key' => $key,
+				'email' => strtolower($params['email']),
+				'name'=> ucwords($params['name']),
+				'user_id' => $profile['id'],
+				'credits' => '0.01',
+				'password' => $params['password']
+			);				
+			
+			$response = $curl->post('https://api.captchas.io/reseller/update_user', $data);
+			//$profile = json_decode($response, TRUE);
 			
 			if (!empty($profile['id'])) {				
 				$f3->set('SESSION.authenticated', TRUE);
