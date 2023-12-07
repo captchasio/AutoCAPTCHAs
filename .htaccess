@@ -3,13 +3,6 @@ RewriteBase /
 
 RewriteRule ^lib/(tmp|api|data|config)\/|\.ini$ - [R=404]
 
-#RewriteCond %{HTTPS} Off [NC]
-#RewriteCond %{HTTP_HOST} ^captchacoins.com$
-#RewriteRule ^(.*)$ https://captchacoins.com/$1 [R=301,L]
-
-#RewriteCond %{HTTP_HOST} ^www.captchacoins.com$
-#RewriteRule ^(.*)$ https://captchacoins.com/$1 [R=301,L]
-
 RewriteCond %{REQUEST_FILENAME} !-l
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
