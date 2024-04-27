@@ -38,9 +38,10 @@ Fun Facts! Well, it is very simple and easy. You sign-up with us and load or top
 
 ##### Base price rate is:
 
-    reCAPTCHA: $1 per 1000 solves.
-    Image: $0.5 per 1000 solves.
-    Audio: $0.7 per 1000 solves.
+    reCAPTCHA: $0.1 per 1000 solves.
+    hCAPTCHA: $0.1 per 1000 solves.
+    Image: $0.05 per 1000 solves.
+    Audio: $0.07 per 1000 solves.
 
 Become a Reseller now! [https://app.captchas.io/reseller/onboard/#pricing]
 
