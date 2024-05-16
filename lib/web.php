@@ -232,7 +232,7 @@ class Web extends Prefab {
 					// Throttle output
 					++$ctr;
 					if ($ctr/$kbps>$elapsed=microtime(TRUE)-$start)
-						usleep(1e6*($ctr/$kbps-$elapsed));
+						usleep(round(1e6*($ctr/$kbps-$elapsed)));
 				}
 				// Send 1KiB and reset timer
 				echo fread($handle,1024);
@@ -359,7 +359,8 @@ class Web extends Prefab {
 			curl_setopt($curl,CURLOPT_POSTFIELDS,$options['content']);
 		if (isset($options['proxy']))
 			curl_setopt($curl,CURLOPT_PROXY,$options['proxy']);
-		curl_setopt($curl,CURLOPT_ENCODING,'gzip,deflate');
+		curl_setopt($curl,CURLOPT_ENCODING,isset($options['encoding'])
+			? $options['encoding'] : 'gzip,deflate');
 		$timeout=isset($options['timeout'])?
 			$options['timeout']:
 			ini_get('default_socket_timeout');
@@ -617,7 +618,8 @@ class Web extends Prefab {
 		}
 		$this->subst($options['header'],
 			[
-				'Accept-Encoding: gzip,deflate',
+				'Accept-Encoding: '.(isset($options['encoding'])?
+					$options['encoding']:'gzip,deflate'),
 				'User-Agent: '.(isset($options['user_agent'])?
 					$options['user_agent']:
 					'Mozilla/5.0 (compatible; '.php_uname('s').')'),
@@ -1006,7 +1008,7 @@ if (!function_exists('gzdecode')) {
 		if (!is_dir($tmp=$fw->TEMP))
 			mkdir($tmp,Base::MODE,TRUE);
 		file_put_contents($file=$tmp.'/'.$fw->SEED.'.'.
-			$fw->hash(uniqid(NULL,TRUE)).'.gz',$str,LOCK_EX);
+			$fw->hash(uniqid('',TRUE)).'.gz',$str,LOCK_EX);
 		ob_start();
 		readgzfile($file);
 		$out=ob_get_clean();

@@ -1,6 +1,48 @@
 CHANGELOG
 
-3.7.3
+3.8.2 (24.07.2023)
+---
+*	feat, Base->format: optimize international date formatting for php8.1+
+*	fix, Base->format: keep php7 compatibility in date formatter [#360](https://github.com/f3-factory/fatfree-core/issues/360)
+*	fix, Markdown: unicode chars not captured correctly for headline slugs [#363](https://github.com/f3-factory/fatfree-core/issues/363)
+*	fix, Preview->resolve: PHP8+ error, undefined variable $hash [#359](https://github.com/f3-factory/fatfree-core/issues/359)
+*	fix, Base->clean: PHP8+ error, strip_tags with null value usage
+
+3.8.1 (05.11.2022)
+---
+*   fix: CORS preflight request fails to find route for ajax-only definitions [bcosca/fatfree#1242](https://github.com/bcosca/fatfree/issues/1242)
+*   fix: add realpath to captcha font filepath, [#314](https://github.com/bcosca/fatfree-core/issues/314)
+*   fix: case-insensitive custom tag matching [#353](https://github.com/bcosca/fatfree-core/issues/353)
+*   fix: php8 error suppression on invalid locale constant access [bcosca/fatfree#1259](https://github.com/bcosca/fatfree/issues/1259)
+*   fix: iteration over inaccessible object properties, fixes [#350](https://github.com/bcosca/fatfree-core/issues/350)
+*   feat: let jig handle utf8 issues more gracefully [#352](https://github.com/bcosca/fatfree-core/issues/352)
+*   fix: BC issue for pre php74
+*   fix: ensure template->parse does render zero text-node, [#354](https://github.com/bcosca/fatfree-core/issues/354)
+*   fix: DB\SQL\Mapper: allow to pass an empty array as $filter, fixes [bcosca/fatfree#1257](https://github.com/bcosca/fatfree/issues/1257)
+*   fix: adhoc null fields in Twig are executed as callable, [#310](https://github.com/bcosca/fatfree-core/issues/310)
+*   fix: ensure merged default PARAMS are properly encoded when building alias, [#345](https://github.com/bcosca/fatfree-core/issues/345)
+*   fix: Added CORS defaults that are not initialized
+*   fix: SQL cache schema for $fields
+*   fix: adhoc field with null value php81 issue, [#339](https://github.com/bcosca/fatfree-core/issues/339)
+*   fix: check against correct identity flags when using IDENTITY_INSERT for sql server
+*   added missing file location in error handler [bcosca/fatfree#1255](https://github.com/bcosca/fatfree/issues/1255)
+*   Web->request, add option to adjust accept-encoding in curl engine [#355](https://github.com/bcosca/fatfree-core/issues/355)
+
+3.8.0 (15 Feb 2022)
+---
+*   Feat: allow access to previous session data in cache-based session handler
+*   Feat: pass session information to onSuspect Session handler
+*   Fix: PHP 8.1 compatibility fixes [#332](https://github.com/bcosca/fatfree-core/issues/332) [#333](https://github.com/bcosca/fatfree-core/issues/333)
+*   Fix: check for critical schemes in url validation
+*   Fix: plural format syntax with empty param, [#325](https://github.com/bcosca/fatfree-core/issues/325)
+*   Fix: DB mapper not able to fetch field scheme in sqlite views
+*   Fix: capitalization of array key X-Http-Method-Override in headers [#327](https://github.com/bcosca/fatfree-core/issues/327)
+*   Fix SMTP: allow RFC2047 encoded words in From/To/Cc/Bcc headers
+*   Fix: use correct ternary value, [#323](https://github.com/bcosca/fatfree-core/issues/323)
+*   Fix: trace not present in error handler when in CLI mode and !DEBUG, [#323](https://github.com/bcosca/fatfree-core/issues/323)
+
+3.7.3 (13 Dec 2020)
+---
 *   NEW: added auto_increment detection, [bcosca/fatfree#1192](https://github.com/bcosca/fatfree/issues/1192), [bcosca/fatfree#1093](https://github.com/bcosca/fatfree/issues/1093), [bcosca/fatfree#1175](https://github.com/bcosca/fatfree/issues/1175), [#290](https://github.com/bcosca/fatfree-core/issues/290)
 *   added SMTP dialog error handling, [#317](https://github.com/bcosca/fatfree-core/issues/317)
 *   Fix: Check active transaction before rollback/commit (PHP8 issue)
@@ -16,6 +58,7 @@ CHANGELOG
 *   Fixed a couple PHPDOC issues
  
 3.7.2 (28 May 2020)
+---
 *   CHANGED, View->sandbox: disable escaping when rendering as text/plain, [bcosca/fatfree#654](https://github.com/bcosca/fatfree/issues/654)
 *   update HTTP protocol checks, [bcosca/fatfree#1190](https://github.com/bcosca/fatfree/issues/1190)
 *   Base->clear: close vulnerability on variable compilation, [bcosca/fatfree#1191](https://github.com/bcosca/fatfree/issues/1191)
@@ -31,12 +74,14 @@ CHANGELOG
 *   only use money_format up until php7.4, [bcosca/fatfree#1174](https://github.com/bcosca/fatfree/issues/1174)
 
 3.7.1 (30. December 2019)
+---
 *   Base->build: Add support for brace-enclosed route tokens
 *   Base->reroute, fix duplicate fragment issue on non-alias routes
 *   DB\SQL\Mapper: fix empty check for pkey when reloading after insert
 *   Web->minify: fix minification with multiple files, [bcosca/fatfree#1152](https://github.com/bcosca/fatfree/issues/1152), [#bcosca/fatfree#1169](https://github.com/bcosca/fatfree/issues/1169)
 
 3.7.0 (26. November 2019)
+---
 *   NEW: Matrix, added select and walk methods for array processing and validation tools
 *   NEW: Added configurable file locking via LOCK var
 *   NEW: json support for dictionary files
@@ -72,6 +117,7 @@ CHANGELOG
 *   fix PHPdoc and variable inspection, [bcosca/fatfree#865](https://github.com/bcosca/fatfree/issues/865), [bcosca/fatfree#1128](https://github.com/bcosca/fatfree/issues/1128)
 
 3.6.5 (24 December 2018)
+---
 *	NEW: Log, added timestamp to each line
 *	NEW: Auth, added support for custom compare method, [#116](https://github.com/bcosca/fatfree-core/issues/116)
 *	NEW: cache tag support for mongo & jig mapper, ref [#166](https://github.com/bcosca/fatfree-core/issues/116)
@@ -115,6 +161,7 @@ CHANGELOG
 *	Expose Mapper->factory() method
 
 3.6.4 (19 April 2018)
+---
 *	NEW: Added Dependency Injection support with CONTAINER variable [#221](https://github.com/bcosca/fatfree-core/issues/221)
 *	NEW: configurable LOGGABLE error codes [#1091](https://github.com/bcosca/fatfree/issues/1091#issuecomment-364674701)
 *	NEW: JAR.lifetime option, [#178](https://github.com/bcosca/fatfree-core/issues/178)
@@ -140,6 +187,7 @@ CHANGELOG
 *	Fixed expiration time when updating an existing cookie
 
 3.6.3 (31 December 2017)
+---
 *	PHP7 fix: remove deprecated (unset) cast
 *	Web->request: restricted follow_location to 3XX responses only
 *	CLI mode: refactored arguments parsing
@@ -172,6 +220,7 @@ CHANGELOG
 *	fix View->render using potentially wrong cache entry
 
 3.6.2 (26 June 2017)
+---
 *   Return a status code > 0 when dying on error [#220](https://github.com/bcosca/fatfree-core/issues/220)
 *   fix SMTP line width [#215](https://github.com/bcosca/fatfree-core/issues/215)
 *   Allow using a custom field for ldap user id checking [#217](https://github.com/bcosca/fatfree-core/issues/217)
@@ -199,6 +248,7 @@ CHANGELOG
 *   Optimize template conversion to PHP file
 
 3.6.1 (2 April 2017)
+---
 *	NEW: Recaptcha plugin [#194](https://github.com/bcosca/fatfree-core/pull/194)
 *	NEW: MB variable for detecting multibyte support
 *	NEW: DB\SQL: Cache parsed schema for the TTL duration
@@ -255,6 +305,7 @@ CHANGELOG
 *	Bug fix: base stripped twice in router (#176)
 
 3.6.0 (19 November 2016)
+---
 *	NEW: [cli] request type
 *	NEW: console-friendly CLI mode
 *	NEW: lexicon caching
@@ -363,6 +414,7 @@ CHANGELOG
 *	Bug fix: Trailing slash redirection on UTF-8 paths (#121)
 
 3.5.1 (31 December 2015)
+---
 *	NEW: ttl attribute in <include> template tag
 *	NEW: allow anonymous function for template filter
 *	NEW: format modifier for international and custom currency symbol
@@ -410,6 +462,7 @@ CHANGELOG
 *	Bug fix: Web->send() Single quotes around filename not interpreted correctly by some browsers
 
 3.5.0 (2 June 2015)
+---
 *	NEW: until() method for long polling
 *	NEW: abort() to disconnect HTTP client (and continue execution)
 *	NEW: SQL Mapper->required() returns TRUE if field is not nullable
@@ -478,6 +531,7 @@ CHANGELOG
 *	Bug fix: ONERROR does not receive PARAMS on fatal error
 
 3.4.0 (1 January 2015)
+---
 *	NEW: [redirects] section
 *	NEW: Custom config sections
 *	NEW: User-defined AUTOLOAD function
@@ -540,6 +594,7 @@ CHANGELOG
 *	Bug fix: Undefined pkey (#607)
 
 3.3.0 (8 August 2014)
+---
 *	NEW: Attribute in <include> tag to extend hive
 *	NEW: Image overlay with transparency and alignment control
 *	NEW: Allow redirection of specified route patterns to a URL
@@ -571,6 +626,7 @@ CHANGELOG
 *	Quick reference: add RAW variable
 
 3.2.2 (19 March 2014)
+---
 *	NEW: Locales set automatically (Feature request #522)
 *	NEW: Mapper dbtype()
 *	NEW: before- and after- triggers for all mappers
@@ -611,6 +667,7 @@ CHANGELOG
 *	Bug fix: BASE is incorrect on Windows
 
 3.2.1 (7 January 2014)
+---
 *	NEW: EMOJI variable, UTF->translate(), UTF->emojify(), and UTF->strrev()
 *	Allow empty strings in config()
 *	Add support for turning off php://input buffering via RAW
@@ -637,6 +694,7 @@ CHANGELOG
 *	Bug fix: stringify() recursion
 
 3.2.0 (18 December 2013)
+---
 *	NEW: Automatic CSRF protection (with IP and User-Agent checks) for
 	sessions mapped to SQL-, Jig-, Mongo- and Cache-based backends
 *	NEW: Named routes
@@ -706,6 +764,7 @@ CHANGELOG
 *	Bug fix: Loose comparison in stringify()
 
 3.1.2 (5 November 2013)
+---
 *	Abandon .chm help format; Package API documentation in plain HTML;
 	(Launch lib/api/index.html in your browser)
 *	Deprecate BAIL in favor of HALT (default: TRUE)
@@ -726,6 +785,7 @@ CHANGELOG
 *	Bug fix: Unknown bcrypt constant
 
 3.1.1 (13 October 2013)
+---
 *	NEW: Support OpenID attribute exchange
 *	NEW: BAIL variable enables/disables continuance of execution on non-fatal
 	errors
@@ -753,6 +813,7 @@ CHANGELOG
 *	Bug fix: Calculation of elapsed time
 
 3.1.0 (20 August 2013)
+---
 *	NEW: Web->filler() returns a chunk of text from the standard
 	Lorem Ipsum passage
 *	Change in behavior: Drop support for JSON serialization
@@ -781,6 +842,7 @@ CHANGELOG
 	equivalent
 
 3.0.9 (12 June 2013)
+---
 *	NEW: Web->whois()
 *	NEW: Template <switch> <case> tags
 *	Improve CACHE consistency
@@ -802,6 +864,7 @@ CHANGELOG
 *	Bug fix: Country code constants
 
 3.0.8 (17 May 2013)
+---
 *	NEW: Bcrypt lightweight hashing library\
 *	Return total number of records in superset in Cursor->paginate()
 *	ONERROR short-circuit (Enhancement #334)
@@ -812,6 +875,7 @@ CHANGELOG
 *	Bug fix: Unsupported operand types (Issue #324)
 
 3.0.7 (2 May 2013)
+---
 *	NEW: route() now allows an array of routing patterns as first argument;
 	support array as first argument of map()
 *	NEW: entropy() for calculating password strength (NIST 800-63)
@@ -835,6 +899,7 @@ CHANGELOG
 *	Bug fix: Incorrect regex in SMTP
 
 3.0.6 (31 Mar 2013)
+---
 *	NEW: Image->crop()
 *	Modify documentation blocks for PHPDoc interoperability
 *	Allow user to control whether Base->rerouet() uses a permanent or
@@ -862,6 +927,7 @@ CHANGELOG
 *	Bug fix: Base->scrub() ignores pass-thru * argument (Issue #274)
 
 3.0.5 (16 Feb 2013)
+---
 *	NEW: Markdown class with PHP, HTML, and .ini syntax highlighting support
 *	NEW: Options for caching of select() and find() results
 *	NEW: Web->acceptable()
@@ -885,6 +951,7 @@ CHANGELOG
 *	Bug fix: weather() fails when server is unreachable
 
 3.0.4 (29 Jan 2013)
+---
 *	NEW: Support for ICU/CLDR pluralization
 *	NEW: User-defined FALLBACK language
 *	NEW: minify() now recognizes CSS @import directives
@@ -922,6 +989,7 @@ CHANGELOG
 *	Bug fix: language() return value
 
 3.0.3 (29 Dec 2013)
+---
 *	NEW: [ajax] and [sync] routing pattern modifiers
 *	NEW: Basket class (session-based pseudo-mapper, shopping cart, etc.)
 *	NEW: Test->message() method
@@ -953,6 +1021,7 @@ CHANGELOG
 *	Bug fix: URL-decoding
 
 3.0.2 (23 Dec 2013)
+---
 *	NEW: Syntax-highlighted stack traces via Base->highlight(); boolean
 	HIGHLIGHT global variable can be used to enable/disable this feature
 *	NEW: Template engine <ignore> tag
@@ -983,4 +1052,5 @@ CHANGELOG
 *	Use file_get_contents() in methods that don't involve high concurrency
 
 3.0.1 (14 Dec 2013)
+---
 *	Major rewrite of much of the framework's core features
